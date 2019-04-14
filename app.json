@@ -1,0 +1,39 @@
+{
+  "pages": [
+    "pages/calendar/calendar",
+    "pages/index/index",
+    "pages/mine/mine"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#626567",
+    "selectedColor": "#2A8CE5",
+    "backgroundColor": "#FBFBFB",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "浇水",
+        "iconPath": "assets/image/tab_icon_index.png",
+        "selectedIconPath": "assets/image/tab_icon_index_on.png"
+      },
+      {
+        "pagePath": "pages/calendar/calendar",
+        "text": "浇水日历",
+        "iconPath": "assets/image/tab_icon_sign.png",
+        "selectedIconPath": "assets/image/tab_icon_sign_on.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "个人中心",
+        "iconPath": "assets/image/tab_icon_mine.png",
+        "selectedIconPath": "assets/image/tab_icon_mine_on.png"
+      }
+    ]
+  }
+}

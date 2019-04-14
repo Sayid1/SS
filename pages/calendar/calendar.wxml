@@ -1,0 +1,33 @@
+<!-- 日历年月 -->
+<view>
+  <view class="consecutive-days"><text>已连续喂羊1天</text></view>
+  <view class='calendar_title flex_nowrap'>
+    <view class='icon' bindtap='lastMonth'>
+      <van-icon name="arrow-left" color="gray" />
+    </view>
+    <text class="current-date">{{year}}年{{month}}月</text>
+    <view class='icon' bindtap='nextMonth'>
+      <van-icon name="arrow" color="gray" />
+    </view>
+  </view>
+
+<!-- 日历主体 -->
+<view class='calendar'>
+  <view class='header'>
+    <view wx:for='{{date}}' wx:key='{{index}}' class='{{(index == todayIndex) && isTodayWeek ? "weekMark" : ""}}'>
+      <text>{{item}}</text>
+    </view>
+  </view>
+
+  <view class='date-box'>
+    <block wx:for='{{dateArr}}' wx:key='{{index}}'>
+      <view class='[{{isToday == item.isToday ? "nowDay" : ""}}, {{item.disable ? "disable" : ""}}]'>
+        <view class='date-head' bindtap='lookHuoDong' data-year='{{year}}' data-month='{{month}}' data-datenum='{{item.dateNum}}'>
+          <text class='{{item.disable ? "disable" : ""}}'>{{item.dateNum}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+
+</view>
+</view>

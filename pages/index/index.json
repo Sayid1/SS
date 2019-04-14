@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "van-notice-bar": "../../miniprogram_npm/vant-weapp/notice-bar/index",
+    "van-tag": "../../miniprogram_npm/vant-weapp/tag/index"
+  },
+  "navigationBarTitleText": "浇水赚钱",
+  "navigationBarBackgroundColor": "#67d4fd",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#67d4fd",
+  "enablePullDownRefresh": true
+}
