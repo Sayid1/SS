@@ -1,5 +1,12 @@
-//index.js
-//获取应用实例
+import {
+  GLOBAL_API_DOMAIN,
+  IMG_API,
+  TOKEN_KEY,
+  FROM_APP
+} from '../../utils/config/config.js';
+import Api from '/../../utils/config/api.js'
+var utils = require('../../utils/util.js')
+
 const app = getApp()
 
 Page({
@@ -15,7 +22,60 @@ Page({
       url: '../logs/logs'
     })
   },
+  bindGetUserInfo:function(){
+    var token = wx.getStorageSync(TOKEN_KEY);
+    if (!token) {
+      wx.login({
+        success: res => {
+          if (res.code) {
+            let params = {
+              code: res.code
+            }
+            console.log(params)
+            wx.getSetting({
+              success: function (res) {
+                if (res.authSetting['scope.userInfo'] === true) {
+                  // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+                  wx.getUserInfo({
+                    success: function (res) {
+                      params.nickName = res.userInfo.nickName;
+                      params.avatarUrl = res.userInfo.avatarUrl;
+                      params.province = res.userInfo.province;
+                      params.city = res.userInfo.city;
+                      params.country = res.userInfo.country;
+                      params.gender = res.userInfo.gender;
+                      Api.getOpenId(params).then((res) => {
+                        wx.hideToast();
+                        res = res.data;
+                        if (res.res == 0) {
+                          token = res.data.token
+                          wx.setStorageSync(TOKEN_KEY, token);
+                        } else {
+                          wx.showToast({
+                            title: '',
+                            icon: '',
+                            duration: 1200,
+                            mask: true
+                          })
+                        }
+                      })
+
+                    }
+                  })
+                } else {
+
+                }
+              }
+
+            })
+
+          }
+        }
+      })
+    }
+  },
   onLoad: function () {
+
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

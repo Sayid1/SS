@@ -4,6 +4,7 @@
   <view class="notice-bar">
   点击 <text class="banner-more-icon"></text>添加到我的小程序，每天浇水领现金<text class="banner-thumb-icon"></text>
   </view>
+      <button wx:if="{{canIUse}}" bindgetuserinfo="bindGetUserInfo" class='login' openType="getUserInfo">登录</button>
   <view class="footer">
     <view class="row">
       <view class="card">
