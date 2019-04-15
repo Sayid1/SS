@@ -14,9 +14,11 @@
       <view class="right">
         <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn" disabled>提现</van-button>
         <text class="need-days">还需喂羊364天</text>
-      </view>
+      </view> 
     </view>
-
+      <view class="bottom-change-list__ad">
+        <ad unit-id="adunit-4ffe795461054bab"></ad>
+      </view>
     <view class="row disabled">
         <view class="card">
           <text>限时福利：<text class="money">￥1.00</text></text>
