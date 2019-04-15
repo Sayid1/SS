@@ -3,11 +3,11 @@
   <view class="consecutive-days"><text>已连续喂羊1天</text></view>
   <view class='calendar_title flex_nowrap'>
     <view class='icon' bindtap='lastMonth'>
-      <van-icon name="arrow-left" color="gray" />
+      <van-icon name="arrow-left" color="gray" size="20px" />
     </view>
-    <text class="current-date">{{year}}年{{month}}月</text>
+    <text class="current-date" bindtap="openDateSheet">{{year}}年{{month}}月</text>
     <view class='icon' bindtap='nextMonth'>
-      <van-icon name="arrow" color="gray" />
+      <van-icon name="arrow" color="gray" size="20px" />
     </view>
   </view>
 
@@ -47,4 +47,17 @@
       <text>天天浇水</text>
     </view>
   </view>
+
+  <van-action-sheet
+    show="{{ showDateSheet }}"
+  >
+    <van-datetime-picker
+      type="year-month"
+      value="{{ currentDate }}"
+      min-date="{{minDate}}"
+      max-date="{{maxDate}}"
+      bind:cancel="closeDateSheet"
+      bind:confirm="confirmDate"
+    />
+    </van-action-sheet>
 </view>

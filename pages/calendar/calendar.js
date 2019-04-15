@@ -6,7 +6,11 @@ Page({
     dateArr: [],
     isToday: 0,
     isTodayWeek: false,
-    todayIndex: 0
+    todayIndex: 0,
+    showDateSheet: false,
+    currentDate: new Date().getTime(),
+    minDate: new Date().getTime() - 31536000000,
+    maxDate: new Date().getTime() + 31536000000,
   },
   onLoad: function () {
     let now = new Date();
@@ -119,6 +123,28 @@ Page({
   toFeedSheep() {
     wx.switchTab({
       url: "/pages/index/index"
+    })
+  },
+  openDateSheet() {
+    this.setData({
+      showDateSheet: true
+    })
+  },
+  confirmDate(e) {
+    const date = new Date(e.detail)
+    const year = date.getFullYear()
+    const month = date.getMonth()
+    console.log(year, month)
+    this.closeDateSheet()
+    this.setData({
+      year,
+      month: month + 1
+    })
+    this.dateInit(year, month);
+  },
+  closeDateSheet() {
+    this.setData({
+      showDateSheet: false
     })
   }
 })

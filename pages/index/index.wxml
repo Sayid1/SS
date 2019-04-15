@@ -1,10 +1,12 @@
 <!--index.wxml-->
 <view class="container">
   <image src="../../assets/image/6.png" class="bg" />
+  <image src="../../assets/image/2.png" class="kettle" animation="{{animationKettle}}" bindtap="watering"/>
+  <image src="../../assets/image/5.png" class="raindrop" animation="{{animationRaindrop}}" />
+
   <view class="notice-bar">
   点击 <text class="banner-more-icon"></text>添加到我的小程序，每天浇水领现金<text class="banner-thumb-icon"></text>
   </view>
-      <button wx:if="{{canIUse}}" bindgetuserinfo="bindGetUserInfo" class='login' openType="getUserInfo">登录</button>
   <view class="footer">
     <view class="row">
       <view class="card">
@@ -15,17 +17,16 @@
       <view class="right">
         <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn" disabled>提现</van-button>
         <text class="need-days">还需喂羊364天</text>
-      </view> 
-    </view>
-      <view class="bottom-change-list__ad">
-        <ad unit-id="adunit-4ffe795461054bab"></ad>
       </view>
+    </view>
+
     <view class="row disabled">
         <view class="card">
           <text>限时福利：<text class="money">￥1.00</text></text>
           <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
         </view>
         <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp">点击领取</van-button>
+        <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
       </view>
 
       <view class="row disabled">
@@ -34,6 +35,15 @@
           <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
         </view>
         <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp" >点击领取</van-button>
+        <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
+      </view>
+
+      <view class="bottom-change-list__ad">
+        <ad unit-id="adunit-4ffe795461054bab"></ad>
       </view>
     </view>
+    <image src="../../assets/image/4.png" class="new" bindtap="authorize" animation="{{animationAuth}}" wx:if="{{showModal}}" />
+    <image src="../../assets/image/3.png" class="new1" bindtap="closeModal" animation="{{animationAmount}}" />
+    <view class="mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+    <button wx:if="{{canIUse}}" bindgetuserinfo="bindGetUserInfo" class='login' openType="getUserInfo">登录</button>
 </view>

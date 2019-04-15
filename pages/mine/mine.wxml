@@ -44,6 +44,7 @@
         <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
       </view>
       <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp">点击领取</van-button>
+      <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
     </view>
 
     <view class="row disabled">
@@ -52,6 +53,7 @@
         <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
       </view>
       <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp" >点击领取</van-button>
+      <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
     </view>
 
     <view class="row no-hd">
