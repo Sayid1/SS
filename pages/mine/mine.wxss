@@ -1,21 +1,46 @@
-/**mine.wxss**/
+
 .userinfo {
   display: flex;
   flex-direction: column;
+  background: #fff;
+}
+.userinfo .under {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
-
-.userinfo-avatar {
+.userinfo .under .avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.userinfo .under .avatar image {
   width: 128rpx;
   height: 128rpx;
   margin: 20rpx;
-  border-radius: 50%;
+  border-radius: 7px;
 }
-
+.userinfo .under .right {
+  display: flex;
+  flex-direction: column;
+}
 .userinfo-nickname {
-  color: #aaa;
+  color: #000;
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 
-.usermotto {
-  margin-top: 200px;
+.tag {
+  transform: rotate(180deg);
+}
+.tag-text {
+  transform: rotate(180deg);
+}
+.progess {
+  margin-left: 20rpx;
+}
+
+.money {
+  font-size: 18px;
+  font-weight: 600;
 }

@@ -45,7 +45,6 @@ Page({
       }
       dateArr.push(obj);
     }
-    console.log(dateArr)
     if (startWeek !== 0) { // 如果目标月不是从周日开始
       let lastDayNums = new Date(year, month, 0).getDate(); // 获取上一个月有多少天
 
@@ -116,5 +115,10 @@ Page({
       month: (month + 1)
     })
     this.dateInit(year, month);
+  },
+  toFeedSheep() {
+    wx.switchTab({
+      url: "/pages/index/index"
+    })
   }
 })

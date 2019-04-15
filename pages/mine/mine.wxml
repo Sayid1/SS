@@ -1,13 +1,72 @@
 <!--mine.wxml-->
 <view class="container">
+
   <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+    <view class="under">
+      <view class="avatar">
+        <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+        <view wx:else>
+          <image bindtap="bindViewTap" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+        </view>
+        <view class="right">
+          <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+          <text class="emphasis">已连续喂羊<text class="days">1</text>天</text>
+        </view>
+      </view>
+
+      <van-tag mark color="#6190E8" class="tag" size="large">
+        <view class="tag-text"><text>今日未喂羊</text></view>
+      </van-tag>
+    </view>
+
+    <view class="progess">
+      <text class="gray">当前进度</text>
+      <van-progress percentage="50" color="#6190E8" show-pivot="{{false}}" />
+    </view>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+
+  <view class="footer">
+    <view class="row">
+      <view class="card">
+        <text>新人福利：<text class="money">￥1000</text>（1/365）</text>
+        <van-progress percentage="50" color="#6190E8" show-pivot="{{false}}" class="progess" />
+        <text>喂羊满365天即可提现</text>
+      </view>
+      <view class="right">
+        <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn" disabled>提现</van-button>
+        <text class="need-days">还需喂羊364天</text>
+      </view>
+    </view>
+
+    <view class="row disabled">
+      <view class="card">
+        <text>限时福利：<text class="money">￥1.00</text></text>
+        <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
+      </view>
+      <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp">点击领取</van-button>
+    </view>
+
+    <view class="row disabled">
+      <view class="card">
+        <text>专享福利：<text class="money">￥200</text></text>
+        <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
+      </view>
+      <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp" >点击领取</van-button>
+    </view>
+
+    <view class="row no-hd">
+      <view class="card">
+        <text class="invite-1">每邀请一位好友</text>
+        <text class="invite-2">即可获取一张补浇水卡</text>
+      </view>
+      <view class="right">
+        <view class="invite"><text class="invite-revord-text">邀请记录</text><van-icon name="arrow" color="#878787" /></view>
+        <van-button custom-class="invite-btn" round type="danger" size="small">立即邀请</van-button>
+      </view>
+    </view>
+
+    <view class="app-name">
+      <text>天天浇水</text>
+    </view>
   </view>
 </view>

@@ -1,16 +1,36 @@
 <!--index.wxml-->
 <view class="container">
-<view class="notice-bar">
-点击 <text class="banner-more-icon"></text>添加到我的小程序，每天浇水领现金<text class="banner-thumb-icon"></text>
-</view>
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+  <image src="../../assets/image/6.png" class="bg" />
+  <view class="notice-bar">
+  点击 <text class="banner-more-icon"></text>添加到我的小程序，每天浇水领现金<text class="banner-thumb-icon"></text>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+  <view class="footer">
+    <view class="row">
+      <view class="card">
+        <text>新人福利：<text class="money">￥1000</text>（1/365）</text>
+        <van-progress percentage="50" color="#6190E8" show-pivot="{{false}}" class="progess" />
+        <text>喂羊满365天即可提现</text>
+      </view>
+      <view class="right">
+        <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn" disabled>提现</van-button>
+        <text class="need-days">还需喂羊364天</text>
+      </view>
+    </view>
+
+    <view class="row disabled">
+        <view class="card">
+          <text>限时福利：<text class="money">￥1.00</text></text>
+          <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
+        </view>
+        <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp">点击领取</van-button>
+      </view>
+
+      <view class="row disabled">
+        <view class="card">
+          <text>专享福利：<text class="money">￥200</text></text>
+          <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
+        </view>
+        <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp" >点击领取</van-button>
+      </view>
+    </view>
 </view>

@@ -1,7 +1,118 @@
-/**app.wxss**/
-.container {
-  height: 100%;
+page {
   display: flex;
+  min-height: 100%;
+  font-size: 14px;
+}
+.container {
+  display: flex;
+  flex: 1;
   flex-direction: column;
   box-sizing: border-box;
-} 
+  position: relative;
+}
+.footer {
+  flex: 1;
+  display:flex;
+  flex-direction:column;
+}
+.app-name {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 15px;
+  font-weight: 600;
+  font-size: 24px;
+  color: #C1BFC0;
+}
+
+
+.row {
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 5%;
+  padding: 10px 5px;
+  border-left:#D8E9A5 solid 10rpx;
+}
+.row.no-hd {
+  border: none;
+  padding-left: 10px;
+}
+.row.disabled {
+  background: linear-gradient(to right, #e0e0e0, #ccc)
+}
+.row .card {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  flex: 1;
+  margin-right: 25px;
+  color:#333;
+}
+.row.disabled .card {
+  color: #535353;
+}
+.row .right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+.row .card .progess {
+  margin:10px 0;
+}
+
+.tx-btn {
+  text-align: center;
+}
+.need-days {
+  margin-top: 5px;
+  color: #333;
+}
+.footer {
+  background: #F7F8FA;
+}
+.footer .row {
+  margin-top: 20px;
+}
+.emphasis {
+  color: #6190E8;
+}
+.days {
+  color: #E1671C;
+  font-size: 20px;
+  margin: 0 3px;
+}
+.gray {
+  color: #666;
+}
+
+.invite {
+  margin-bottom:5px;
+  display:flex;
+  justify-content: flex-end;
+}
+.invite-1 {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+.invite-2 {
+  color: #000;
+}
+.invite-revord-text {
+  color: #878787;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+.invite-btn {
+  padding: 0 25px !important;
+}
+.cus-btn {
+  padding: 0 25px !important;
+}
+.cus-btn-warp {
+  margin-top: 7px;
+}
