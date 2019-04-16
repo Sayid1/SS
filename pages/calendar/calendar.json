@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "天天喂羊",
+  "navigationBarTitleText": "天天挣钱",
   "usingComponents": {
     "van-icon": "../../miniprogram_npm/vant-weapp/icon/index",
     "van-button": "../../miniprogram_npm/vant-weapp/button/index",

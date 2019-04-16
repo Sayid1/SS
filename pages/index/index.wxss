@@ -5,11 +5,21 @@
   z-index: -10;
 }
 .kettle {
-  width:45px;
-  height:40px;
+  width:60px;
+  height:50px;
   position: absolute;
   right: 18px;
   top: 47%;
+}
+.raindrop-tips {
+  position: absolute;
+  right: 10px;
+  top: calc(47% + 15px);
+  background: #07c160;
+  color: #fff;
+  border-radius: 10px;
+  padding: 3px 5px;
+  font-size: 12px;
 }
 .raindrop {
   width:45px;
@@ -56,9 +66,9 @@
   transform: translate(-50%, -50%);
   z-index: 9999;
 }
-.new, .new1 {
+.new, .new1, .login {
   position:absolute;
-  width: 60%;
+  width: 65%;
   height: 50%;
   top: 50%;
   left: 50%;
@@ -68,4 +78,103 @@
 
 .new1 {
   transform: scale(0)
+}
+
+.tips {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.tag1 {
+  transform: rotate(180deg);
+}
+.tag-text1 {
+  transform: rotate(180deg);
+}
+.task-dialog {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 12px;
+}
+.task-dialog .title {
+  font-size: 18px;
+  font-weight: 600;
+  display: block;
+  margin-top: 10px;
+}
+
+.task-dialog .tasks {
+  color: #333;
+  font-size: 12px;
+  display: block;
+  margin: 10px 0 10px 0;
+  z-index:99
+}
+.task-dialog .ad-warp {
+  border: 1px solid #EFF1F0;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  position: relative;
+}
+.task-dialog .ad-warp::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 8px;
+  background: linear-gradient(#fff 0%,#fff 50%,#AFC771 50%,#AFC771 100%);
+  border-radius: 5px;
+}
+.task-dialog .ad-warp .tips {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.handle {
+  width: 15px;
+  height: 15px;
+}
+.outside-app {
+  background: #D82A34;
+  width: 300px;
+  color: #fff;
+  height: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 0 15px 0 20px;
+}
+.slogan {
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+.app-name-ad {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 3px;
+  display: inline-block;
+  letter-spacing: 2px;
+  color: #fff !important;
+}
+.outside-app .circle {
+  background-color: #FDC07F;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 2px solid #F4A74D;
+  box-shadow: 0 0 0 8px #FDC07F;
+  color: #000;
+  text-align: center;
+  line-height: 35px;
+  font-weight: bold;
 }

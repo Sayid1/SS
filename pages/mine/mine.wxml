@@ -67,6 +67,10 @@
       </view>
     </view>
 
+    <view class="bottom-change-list__ad">
+      <ad unit-id="adunit-4ffe795461054bab"></ad>
+    </view>
+
     <view class="app-name">
       <text>天天浇水</text>
     </view>

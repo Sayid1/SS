@@ -1,8 +1,9 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/mine/mine",
-    "pages/calendar/calendar"
+    "pages/calendar/calendar",
+    "pages/rule/rule",
+    "pages/mine/mine"
   ],
   "window": {
     "backgroundTextStyle": "light",

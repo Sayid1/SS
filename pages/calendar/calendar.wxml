@@ -1,11 +1,11 @@
 <!-- 日历年月 -->
 <view class='container'>
-  <view class="consecutive-days"><text>已连续喂羊1天</text></view>
+  <view class="consecutive-days"><text class="feed-days">已连续喂羊<text class="days">1</text>天</text></view>
   <view class='calendar_title flex_nowrap'>
     <view class='icon' bindtap='lastMonth'>
       <van-icon name="arrow-left" color="gray" size="20px" />
     </view>
-    <text class="current-date" bindtap="openDateSheet">{{year}}年{{month}}月</text>
+    <text class="current-date" bindtap="openDateSheet">{{year}} 年 {{month}} 月</text>
     <view class='icon' bindtap='nextMonth'>
       <van-icon name="arrow" color="gray" size="20px" />
     </view>
@@ -21,8 +21,8 @@
 
     <view class='date-box'>
       <block wx:for='{{dateArr}}' wx:key='{{index}}'>
-        <view class='[{{isToday == item.isToday ? "nowDay" : ""}}, {{item.disable ? "disable" : ""}}]'>
-          <view class='date-head' bindtap='lookHuoDong' data-year='{{year}}' data-month='{{month}}' data-datenum='{{item.dateNum}}'>
+        <view class='[{{isToday == item.isToday ? "nowDay" : ""}}, {{selectedDay == item.isToday ? "selectedDay" : ""}} {{item.disable ? "disable" : ""}}]' bindtap="clickDay" data-date="{{item.isToday}}">
+          <view class='date-head'>
             <text class='{{item.disable ? "disable" : ""}}'>{{item.dateNum}}</text>
           </view>
         </view>
@@ -38,9 +38,13 @@
     <view class="replenish">
       <view class="card">
         <text>我的补喂羊卡：0</text>
-        <text>每邀请一个好友即可获得一张补喂羊卡</text>
+        <text class="gray remark">每邀请一个好友即可获得一张补喂羊卡</text>
       </view>
       <van-button round plain type="primary" size="small">邀请好友</van-button>
+    </view>
+
+    <view class="bottom-change-list__ad">
+      <ad unit-id="adunit-4ffe795461054bab"></ad>
     </view>
 
     <view class="app-name">

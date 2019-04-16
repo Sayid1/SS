@@ -1,0 +1,10 @@
+<view class="container">
+  <image src="../../assets/image/rule.jpg" class="bg" mode="scaleToFill" />
+  <view class='rules'>
+    <text>1、连续浇水90天 可赚200元；连续浇水180天 可累计赚450元；连续浇水365天 可累计赚1000元。</text>
+    <text>2、每天浇水成功才算是完成任务</text>
+    <text>3、如若忘记浇水，可使用补浇水卡进行补浇水，每邀请一个好友可获得一个补浇水卡</text>
+    <text>4、限时福利和补浇水的被邀请人需要完成至少一天浇水任务</text>
+    <text>5、7天忘记浇水则浇水数据重新计算</text>
+  </view>
+</view>
