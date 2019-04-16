@@ -80,6 +80,12 @@ Page({
     })
   },
   onLoad() {
+    // 任务实例
+    // Api.task({}).then((res) => {
+    //   wx.hideToast();
+    //   res = res.data;
+    //   console.log(res);
+    // })
     // var token = wx.getStorageSync(TOKEN_KEY);
     // if (!token) {
     //   this.setData({
