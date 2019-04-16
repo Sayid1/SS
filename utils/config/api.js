@@ -10,11 +10,26 @@ const ALL_API = {
     method: 'POST',
     url: 'getOpenId'
   },
+  //提交form id
   submitForm: {
     method: 'POST',
     url: 'submitForm'
   },
-
+  //是否要补水
+  isNeededPatchWater: {
+    method: 'POST',
+    url: 'isNeededPatchWater'
+  },
+  //今天是否浇水
+  isWaterToday: {
+    method: 'POST',
+    url: 'isWaterToday'
+  },
+  //任务完成提交状态
+  finish: {
+    method: 'POST',
+    url: 'finish'
+  },
 }
 
 const Api = new MyHttp({}, ALL_API);
