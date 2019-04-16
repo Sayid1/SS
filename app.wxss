@@ -25,6 +25,7 @@ page {
   font-weight: 600;
   font-size: 24px;
   color: #C1BFC0;
+  margin-top: 20px;
 }
 
 
@@ -125,4 +126,7 @@ page {
 }
 .cus-btn-warp {
   margin-top: 7px;
+}
+.bottom-change-list__ad {
+  margin: 20px 5% 0 5%;
 }

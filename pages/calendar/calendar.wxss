@@ -75,12 +75,15 @@
   font-size: 12pt;
 }
 
-.nowDay .date-head {
+.nowDay .date-head{
+  color: #8FB1F0;
+}
+.selectedDay .date-head {
   width: 80rpx;
   border-radius: 50%;
   text-align: center;
   color: #fff;
-  background-color: #ff9933;
+  background-color: #8FB1F0;
   margin: 0 auto;
 }
 .disable {
@@ -108,4 +111,11 @@
 .footer {
   background: #F7F8FA;
   padding-top: 20px;
+}
+.remark {
+  margin-top: 5px;
+}
+.feed-days {
+  color: #8FB1F0;
+  letter-spacing: 1px;
 }

@@ -7,6 +7,7 @@ Page({
     isToday: 0,
     isTodayWeek: false,
     todayIndex: 0,
+    selectedDay: '',
     showDateSheet: false,
     currentDate: new Date().getTime(),
     minDate: new Date().getTime() - 31536000000,
@@ -20,7 +21,8 @@ Page({
     this.setData({
       year: year,
       month: month,
-      isToday: '' + year + month + now.getDate()
+      selectedDay: '' + year + ('' + month).padStart(2, 0) + ('' + now.getDate()).padStart(2, 0),
+      isToday: '' + year + ('' + month).padStart(2, 0) + ('' + now.getDate()).padStart(2, 0)
     })
   },
   dateInit: function (setYear, setMonth) {
@@ -42,7 +44,7 @@ Page({
     }
     for (let i = 1; i <= dayNums; i++) {
       obj = {
-        isToday: '' + year + (month + 1) + i,
+        isToday: '' + year + ('' + (month + 1)).padStart(2, 0) + ('' + i).padStart(2, 0),
         dateNum: i,
         weight: 5,
         disable: +new Date(year, month, i, 23, 23, 59) < today
@@ -54,7 +56,7 @@ Page({
 
       for (let i = 0; i < startWeek; i++) {
         dateArr.unshift({
-          isToday: '' + year + month + lastDayNums, // TODO 上一年
+          isToday: '' + year + ('' + month).padStart(2, 0) + ('' + lastDayNums).padStart(2, 0), // TODO 上一年
           dateNum: lastDayNums--,
           weight: 5,
           disable: true
@@ -66,7 +68,7 @@ Page({
       for (let i = endWeek; i < 6; i++) {
         let afterNextMonth = (nextMonth + 1) > 11 ? 1 : (nextMonth + 1);
         dateArr.push({
-          isToday: '' + year + afterNextMonth + ++j, // TODO 上一年
+          isToday: '' + year + ('' + afterNextMonth).padStart(2, 0) + ('' + ++j).padStart(2, 0), // TODO 上一年
           dateNum: j,
           weight: 5,
           disable: true
@@ -134,17 +136,36 @@ Page({
     const date = new Date(e.detail)
     const year = date.getFullYear()
     const month = date.getMonth()
-    console.log(year, month)
     this.closeDateSheet()
     this.setData({
       year,
       month: month + 1
     })
-    this.dateInit(year, month);
+    this.dateInit(year, month)
   },
   closeDateSheet() {
     this.setData({
       showDateSheet: false
     })
+  },
+  clickDay(e) {
+    var date = e.currentTarget.dataset.date
+    var year = Number(date.substr(0, 4))
+    var month = Number(date.substr(4, 2))
+    var month = Number(date.substr(4, 2))
+    var day = Number(date.substr(6))
+    if (year !== this.data.year || month !== this.month) {
+      this.setData({
+        year,
+        month,
+        selectedDay: date
+      })
+      this.dateInit(year, month - 1);
+    } else {
+      this.setData({
+
+        selectedDay: date
+      })
+    }
   }
 })

@@ -1,11 +1,20 @@
 <!--index.wxml-->
 <view class="container">
   <image src="../../assets/image/6.png" class="bg" />
-  <image src="../../assets/image/2.png" class="kettle" animation="{{animationKettle}}" bindtap="watering"/>
+  <image src="../../assets/image/2.png" class="kettle" animation="{{animationKettle}}" bindtap="watering" bindanimationiteration="animationend"/>
+  <text class="raindrop-tips">今日已浇水</text>
   <image src="../../assets/image/5.png" class="raindrop" animation="{{animationRaindrop}}" />
 
   <view class="notice-bar">
   点击 <text class="banner-more-icon"></text>添加到我的小程序，每天浇水领现金<text class="banner-thumb-icon"></text>
+  </view>
+  <view class="tips">
+    <van-tag mark color="#6190E8" class="tag" size="large">
+      <view class="tag-text"><text>已连续浇水175天</text></view>
+    </van-tag>
+    <van-tag mark color="#6190E8" class="tag1" size="large">
+      <view class="tag-text1" bindtap="toRule"><text>浇水规则</text></view>
+    </van-tag>
   </view>
   <view class="footer">
     <view class="row">
@@ -42,8 +51,48 @@
         <ad unit-id="adunit-4ffe795461054bab"></ad>
       </view>
     </view>
-    <image src="../../assets/image/4.png" class="new" bindtap="authorize" animation="{{animationAuth}}" wx:if="{{showModal}}" />
+    <van-dialog
+      use-slot
+      show="{{ taskDialog }}"
+      show-confirm-button="{{false}}"
+      close-on-click-overlay="{{true}}"
+    >
+      <!-- bind:close="onClose"
+      bind:getuserinfo="getUserInfo" -->
+      <view class="task-dialog">
+        <text class="title">请完成以下任务再浇水</text>
+        <text class="tasks">今日任务（0/2）</text>
+        <view class="ad-warp">
+          <view class="tips">
+            <image src="../../assets/image/handle2.png" class="handle" />
+            <text>点击图片，10秒后返回即可</text>
+          </view>
+          <view>
+            <ad unit-id="adunit-4ffe795461054bab"></ad>
+          </view>
+        </view>
+        <view class="ad-warp">
+          <view class="tips">
+            <image src="../../assets/image/handle2.png" class="handle" />
+            <text>点击图片，10秒后返回即可</text>
+          </view>
+          <view class="outside-app">
+            <view>
+              <text class="slogan">体验</text>
+              <text class="app-name-ad">天天喂羊</text>
+              <text class="slogan">小程序</text>
+            </view>
+            <view class="circle">
+              <text>GO</text>
+            </view>
+          </view>
+        </view>
+        <van-button disabled round type="primary">完成上述任务并浇水</van-button>
+      </view>
+    </van-dialog>
+    <image src="../../assets/image/4.png" class="new" animation="{{animationAuth}}" wx:if="{{showPacket}}" />
     <image src="../../assets/image/3.png" class="new1" bindtap="closeModal" animation="{{animationAmount}}" />
-    <view class="mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+    <button bindgetuserinfo="bindGetUserInfo" class='login' plain openType="getUserInfo" wx:if="{{showPacket}}"></button>
+    <view class="mask" catchtouchmove="preventTouchMove" wx:if="{{showMask}}"></view>
     <button wx:if="{{canIUse}}" bindgetuserinfo="bindGetUserInfo" class='login' openType="getUserInfo">登录</button>
 </view>
