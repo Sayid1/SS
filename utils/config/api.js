@@ -30,6 +30,16 @@ const ALL_API = {
     method: 'POST',
     url: 'finish'
   },
+  //补水卡的数量
+  getPatchCard: {
+    method: 'POST',
+    url: 'getPatchCard'
+  },
+  //邀请的好友列表
+  inviteList: {
+    method: 'POST',
+    url: 'inviteList'
+  },
 }
 
 const Api = new MyHttp({}, ALL_API);
