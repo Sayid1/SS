@@ -1,11 +1,13 @@
 {
   "usingComponents": {
-    "van-notice-bar": "../../miniprogram_npm/vant-weapp/notice-bar/index",
-    "van-tag": "../../miniprogram_npm/vant-weapp/tag/index",
-    "van-progress": "../../miniprogram_npm/vant-weapp/progress/index",
-    "van-button": "../../miniprogram_npm/vant-weapp/button/index",
-    "van-icon": "../../miniprogram_npm/vant-weapp/icon/index",
-    "van-dialog": "../../miniprogram_npm/vant-weapp/dialog/index"
+    "van-notice-bar": "../../dist/notice-bar/index",
+    "van-tag": "../../dist/tag/index",
+    "van-progress": "../../dist/progress/index",
+    "van-button": "../../dist/button/index",
+    "van-icon": "../../dist/icon/index",
+    "van-dialog": "../../dist/dialog/index",
+    "van-toast": "../../dist/toast/index",
+    "van-transition": "../../dist/transition/index"
   },
   "navigationBarTitleText": "浇水挣钱",
   "navigationBarBackgroundColor": "#67d4fd",

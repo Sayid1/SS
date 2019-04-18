@@ -11,6 +11,20 @@
   right: 18px;
   top: 47%;
 }
+.formid-kettle-btn, button[disabled] {
+  position: absolute;
+  right: 18px;
+  top: 47%;
+  width:60px;
+  height:50px;
+  background: transparent;
+  border-color: transparent;
+}
+.formid-kettle-btn[disabled] {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+.formid-kettle-btn::after { border: none; }
 .raindrop-tips {
   position: absolute;
   right: 10px;
@@ -47,42 +61,28 @@
 .footer .row {
   margin-top: 10px;
 }
- 
-.mask {
+.packet view{
+  font-size: 0;
+  border-radius: 8px;
+  background: transparent;
+}
+.packet image {
+  width: 85vw;
+  height: 60vh;
+}
+.login {
+  position:absolute;
   width: 100%;
   height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: #000;
-  z-index: 9000;
-  opacity: 0.7;
-}
-
-.modalDlg {
-  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 9999;
-}
-.new, .new1, .login {
-  position:absolute;
-  width: 65%;
-  height: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-}
-
-.new1 {
-  transform: scale(0)
+  z-index: 20;
 }
 
 .tips {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-top: 10px;
 }
@@ -113,7 +113,7 @@
   font-size: 12px;
   display: block;
   margin: 10px 0 10px 0;
-  z-index:99
+  z-index:8
 }
 .task-dialog .ad-warp {
   border: 1px solid #EFF1F0;
@@ -177,4 +177,22 @@
   text-align: center;
   line-height: 35px;
   font-weight: bold;
+}
+.mock {
+  background:#6190E8;
+  border-radius:10px;
+  padding:0px 8px 0 0px;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  position: absolute;
+  left: 0;
+  top: 10px;
+  transform: translateX(-100%);
+}
+.mock image {
+  width:20px;
+  height:20px;
+  margin-left: 3px;
+  border-radius:50%;
 }

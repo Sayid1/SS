@@ -167,5 +167,8 @@ Page({
         selectedDay: date
       })
     }
+  },
+  onShareAppMessage() {
+
   }
 })

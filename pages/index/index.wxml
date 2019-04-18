@@ -1,23 +1,21 @@
 <!--index.wxml-->
 <view class="container">
   <image src="../../assets/image/6.png" class="bg" />
-  <image src="../../assets/image/2.png" class="kettle" animation="{{animationKettle}}" bindtap="watering" bindanimationiteration="animationend" />
+  <form report-submit report-submit-timeout="{{500}}" bindsubmit="catchFormId">
+    <image src="../../assets/image/2.png" class="kettle" animation="{{animationKettle}}" />
+    <button form-type="submit" class="formid-kettle-btn" disabled="{{water}}" bindtap="watering"></button>
+  </form>
   <text class="raindrop-tips">今日已浇水</text>
   <image src="../../assets/image/5.png" class="raindrop" animation="{{animationRaindrop}}" />
-  <!-- <button bindgetuserinfo="bindGetUserInfo" class="shell-left" openType="getUserInfo">
-    登陆
-  </button> -->
-  <view class="notice-bar">
-    点击
-    <text class="banner-more-icon"></text>添加到我的小程序，每天浇水领现金
-    <text class="banner-thumb-icon"></text>
+
+  <!-- <view class="notice-bar">
+  点击 <text class="banner-more-icon"></text>添加到我的小程序，每天浇水领现金<text class="banner-thumb-icon"></text>
+  </view> -->
+  <view class="mock" animation="{{animationMock}}">
+    <image wx:if="{{avatarIndex}}" src="../../assets/avatar/{{avatarIndex}}.jpg" />
+    <text>{{mock}}</text>
   </view>
   <view class="tips">
-    <van-tag mark color="#6190E8" class="tag" size="large">
-      <view class="tag-text">
-        <text>已连续浇水175天</text>
-      </view>
-    </van-tag>
     <van-tag mark color="#6190E8" class="tag1" size="large">
       <view class="tag-text1" bindtap="toRule">
         <text>浇水规则</text>
@@ -32,46 +30,49 @@
         <text>喂羊满365天即可提现</text>
       </view>
       <view class="right">
-        <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn" disabled>提现</van-button>
+        <van-button bindtap="cash" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn" disabled>提现</van-button>
         <text class="need-days">还需喂羊364天</text>
       </view>
     </view>
 
     <view class="row disabled">
-      <view class="card">
-        <text>限时福利：<text class="money">￥1.00</text></text>
-        <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
-      </view>
-      <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp">点击领取</van-button>
-      <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
+        <view class="card">
+          <text>限时福利：<text class="money">￥1.00</text></text>
+          <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
+        </view>
+        <van-button bindtap="benefits" data-num="{{2}}" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp">点击领取</van-button>
+        <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
     </view>
 
-    <view class="row disabled">
-      <view class="card">
-        <text>专享福利：<text class="money">￥200</text></text>
-        <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
-      </view>
-      <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp">点击领取</van-button>
-      <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
+      <view class="row disabled">
+        <view class="card">
+          <text>专享福利：<text class="money">￥200</text></text>
+          <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
+        </view>
+        <van-button bindtap="benefits" data-num="{{1000}}" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp" >点击领取</van-button>
+        <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
     </view>
 
     <view class="bottom-change-list__ad">
       <ad unit-id="adunit-4ffe795461054bab"></ad>
     </view>
-  </view>
-  <van-dialog use-slot show="{{ taskDialog }}" show-confirm-button="{{false}}" close-on-click-overlay="{{true}}">
-    <!-- bind:close="onClose"
-      bind:getuserinfo="getUserInfo" -->
-    <view class="task-dialog">
-      <text class="title">请完成以下任务再浇水</text>
-      <text class="tasks">今日任务（0/2）</text>
-      <view class="ad-warp">
-        <view class="tips">
-          <image src="../../assets/image/handle2.png" class="handle" />
-          <text>点击图片，10秒后返回即可</text>
-        </view>
-        <view>
-          <ad unit-id="adunit-4ffe795461054bab"></ad>
+    <van-dialog
+      use-slot
+      show="{{ taskDialog }}"
+      show-confirm-button="{{false}}"
+      close-on-click-overlay="{{true}}"
+    >
+      <view class="task-dialog">
+        <text class="title">请完成以下任务再浇水</text>
+        <text class="tasks">今日任务（0/2）</text>
+        <view class="ad-warp">
+          <view class="tips">
+            <image src="../../assets/image/handle2.png" class="handle" />
+            <text>点击图片，10秒后返回即可</text>
+          </view>
+          <view>
+            <ad unit-id="adunit-4ffe795461054bab"></ad>
+          </view>
         </view>
       </view>
       <view class="ad-warp">
@@ -90,12 +91,29 @@
           </view>
         </view>
       </view>
-      <van-button disabled round type="primary">完成上述任务并浇水</van-button>
-    </view>
-  </van-dialog>
-  <image src="../../assets/image/4.png" class="new" animation="{{animationAuth}}" wx:if="{{showPacket}}" />
-  <image src="../../assets/image/3.png" class="new1" bindtap="closeModal" animation="{{animationAmount}}" />
-  <button bindgetuserinfo="bindGetUserInfo" class='login' plain openType="getUserInfo" wx:if="{{showPacket}}"></button>
-  <view class="mask" catchtouchmove="preventTouchMove" wx:if="{{showMask}}"></view>
-  <button wx:if="{{canIUse}}" bindgetuserinfo="bindGetUserInfo" class='login' openType="getUserInfo">登录</button>
+    </van-dialog>
+    <van-dialog
+      class="packet"
+      use-slot
+      show="{{showPacket1}}"
+      showConfirmButton="{{false}}"
+    >
+      <view>
+        <image src="../../assets/image/4.png" />
+        <button bindgetuserinfo="bindGetUserInfo" class='login' plain openType="getUserInfo"></button>
+      </view>
+    </van-dialog>
+    <van-dialog
+      class="packet"
+      use-slot
+      show="{{showPacket2}}"
+      showConfirmButton="{{false}}"
+    >
+     <view bindtap="closePacket2" >
+        <image src="../../assets/image/3.png"/>
+      </view>
+    </van-dialog>
+  <van-dialog id="van-dialog" />
+  <van-toast id="van-toast" />
+</view>
 </view>

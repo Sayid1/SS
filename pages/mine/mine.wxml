@@ -4,10 +4,7 @@
   <view class="userinfo">
     <view class="under">
       <view class="avatar">
-        <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-        <view wx:else>
-          <image bindtap="bindViewTap" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-        </view>
+        <image bindtap="bindViewTap" src="{{userInfo.avatarUrl}}" mode="cover"></image>
         <view class="right">
           <text class="userinfo-nickname">{{userInfo.nickName}}</text>
           <text class="emphasis">已连续喂羊<text class="days">1</text>天</text>
@@ -33,7 +30,7 @@
         <text>喂羊满365天即可提现</text>
       </view>
       <view class="right">
-        <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn" disabled>提现</van-button>
+        <van-button bindtap="cash" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn" disabled>提现</van-button>
         <text class="need-days">还需喂羊364天</text>
       </view>
     </view>
@@ -43,7 +40,7 @@
         <text>限时福利：<text class="money">￥1.00</text></text>
         <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
       </view>
-      <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp">点击领取</van-button>
+      <van-button bindtap="benefits" data-num="{{2}}" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp">点击领取</van-button>
       <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
     </view>
 
@@ -52,7 +49,7 @@
         <text>专享福利：<text class="money">￥200</text></text>
         <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
       </view>
-      <van-button round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp" >点击领取</van-button>
+      <van-button bindtap="benefits" data-num="{{1000}}" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp" >点击领取</van-button>
       <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
     </view>
 
@@ -75,4 +72,5 @@
       <text>天天浇水</text>
     </view>
   </view>
+  <van-dialog id="van-dialog" />
 </view>
