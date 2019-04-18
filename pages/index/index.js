@@ -2,6 +2,7 @@ import {
   GLOBAL_API_DOMAIN,
   IMG_API,
   TOKEN_KEY,
+  USER_ID,
   FROM_APP
 } from '../../utils/config/config.js'
 import Api from '/../../utils/config/api.js'
@@ -32,7 +33,8 @@ Page({
       '已提现1元限时福利',
       '已提现200元专享福利',
     ],
-    interval: null
+    interval: null,
+    inviterId: ''
   },
   onHide() {
     console.log('hide')
@@ -66,7 +68,9 @@ Page({
       showCancelButton: true
     })
   },
-  //事件处理函数
+  adc() {
+    console.log('click ad')
+  },
   watering: function () {
     if (this.data.watered) {
       Dialog.alert({
@@ -131,6 +135,7 @@ Page({
     }, 3500)
   },
   onReady() {
+    console.log('onready')
     const interval = setInterval(this.amimationMock, 2700)
     this.setData({
       interval
@@ -155,7 +160,8 @@ Page({
       animationMock: animationMock.export()
     })
   },
-  onLoad() {
+  onLoad(query) {
+    let inviterId = query.inviter_id || ''
     let mock = this.data.randomData[this.getRandom(1, 4)]
     let placeholder = mock.match(/\d+,\d+/)
     if (placeholder) {
@@ -164,6 +170,7 @@ Page({
       mock = mock.replace(placeholder, num)
     } 
     this.setData({
+      inviterId,
       mock,
       avatarIndex: this.getRandom(1, 4),
     })
@@ -173,8 +180,9 @@ Page({
       this.setData({
         showPacket1: true,
       })
-    }
-    
+    } else {
+      this.init()
+    } 
   },
   async init() {
     const res1 = await Api.isWaterToday()
@@ -217,24 +225,30 @@ Page({
             let params = {
               code: res.code
             }
+            console.log(params)
             wx.getSetting({
               success: function (res) {
                 if (res.authSetting['scope.userInfo'] === true) {
                   // 已经授权，可以直接调用 getUserInfo 获取头像昵称
                   wx.getUserInfo({
                     success: function (res) {
+                      console.log(res)
                       params.nickName = res.userInfo.nickName
                       params.avatarUrl = res.userInfo.avatarUrl
                       params.province = res.userInfo.province
                       params.city = res.userInfo.city
                       params.country = res.userInfo.country
                       params.gender = res.userInfo.gender
+                      if (_this.data.inviterId) params.from_user_id = _this.data.inviterId
                       Api.getOpenId(params).then((res) => {
+                        console.log(res)
                         wx.showTabBar()
                         res = res.data
                         if (res.res == 0) {
                           token = res.data.token
                           wx.setStorageSync(TOKEN_KEY, token)
+                          wx.setStorageSync(USER_ID, res.data.userInfo.user_id)
+                          _this.init()
                           Toast.clear()
                           _this.setData({
                             showPacket1: false,
@@ -248,7 +262,10 @@ Page({
                             mask: true
                           })
                         }
-                      })
+                      }).catch(err => console.log(err))
+                    },
+                    fail(err) {
+                      console.log(err)
                     }
                   })
                 }
@@ -265,6 +282,8 @@ Page({
     })
   },
   onShareAppMessage() {
-
+    return {
+      path: "/pages/index/index?user_id=" + wx.getStorageSync(USER_ID)
+    }
   }
 })

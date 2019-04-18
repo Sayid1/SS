@@ -1,4 +1,7 @@
 import Dialog from '../../dist/dialog/dialog'
+import {
+  USER_ID
+} from '../../utils/config/config.js'
 
 const app = getApp()
 
@@ -30,6 +33,8 @@ Page({
     })
   },
   onShareAppMessage() {
-
+    return {
+      path: "/pages/index/index?user_id=" + wx.getStorageSync(USER_ID)
+    }
   }
 })

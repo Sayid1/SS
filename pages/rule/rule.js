@@ -1,4 +1,6 @@
-// pages/rule/rule.js
+import {
+  USER_ID
+} from '../../utils/config/config.js'
 Page({
 
   /**
@@ -61,6 +63,8 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      path: "/pages/index/index?user_id=" + wx.getStorageSync(USER_ID)
+    }
   }
 })

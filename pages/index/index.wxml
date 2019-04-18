@@ -70,24 +70,25 @@
             <image src="../../assets/image/handle2.png" class="handle" />
             <text>点击图片，10秒后返回即可</text>
           </view>
-          <view>
+          <view class="abc">
+            <view bindtap="adc"></view>
             <ad unit-id="adunit-4ffe795461054bab"></ad>
           </view>
         </view>
-      </view>
-      <view class="ad-warp">
-        <view class="tips">
-          <image src="../../assets/image/handle2.png" class="handle" />
-          <text>点击图片，10秒后返回即可</text>
-        </view>
-        <view class="outside-app">
-          <view>
-            <text class="slogan">体验</text>
-            <text class="app-name-ad">天天喂羊</text>
-            <text class="slogan">小程序</text>
+        <view class="ad-warp">
+          <view class="tips">
+            <image src="../../assets/image/handle2.png" class="handle" />
+            <text>点击图片，10秒后返回即可</text>
           </view>
-          <view class="circle">
-            <text>GO</text>
+          <view class="outside-app">
+            <view>
+              <text class="slogan">体验</text>
+              <text class="app-name-ad">天天喂羊</text>
+              <text class="slogan">小程序</text>
+            </view>
+            <view class="circle">
+              <text>GO</text>
+            </view>
           </view>
         </view>
       </view>

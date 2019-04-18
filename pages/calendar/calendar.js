@@ -1,3 +1,7 @@
+import {
+  USER_ID
+} from '../../utils/config/config.js'
+
 Page({
   data: {
     year: 0,
@@ -169,6 +173,8 @@ Page({
     }
   },
   onShareAppMessage() {
-
+    return {
+      path: "/pages/index/index?user_id=" + wx.getStorageSync(USER_ID)
+    }
   }
 })
