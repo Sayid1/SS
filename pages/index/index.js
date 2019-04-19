@@ -161,6 +161,12 @@ Page({
     })
   },
   onLoad(query) {
+    Api.waterRecord({}).then((res) => {
+      console.log(res)
+      res = res.data
+
+    }).catch(err => console.log(err))
+
     let inviterId = query.inviter_id || ''
     let mock = this.data.randomData[this.getRandom(1, 4)]
     let placeholder = mock.match(/\d+,\d+/)

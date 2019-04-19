@@ -45,6 +45,11 @@ const ALL_API = {
     method: 'POST',
     url: 'inviteList'
   },
+  //浇水记录
+  waterRecord: {
+    method: 'POST',
+    url: 'waterRecord'
+  },
 }
 
 const Api = new MyHttp({}, ALL_API);
