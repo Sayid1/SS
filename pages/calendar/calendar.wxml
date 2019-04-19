@@ -21,16 +21,17 @@
 
     <view class='date-box'>
       <block wx:for='{{dateArr}}' wx:key='{{index}}'>
-        <view class='[{{isToday == item.isToday ? "nowDay" : ""}}, {{selectedDay == item.isToday ? "selectedDay" : ""}} {{item.disable ? "disable" : ""}}]' bindtap="clickDay" data-date="{{item.isToday}}">
+        <view class='[{{isToday == item.isToday ? "nowDay" : ""}}, {{selectedDay == item.isToday ? "selectedDay" : ""}} {{item.disable ? "disable" : ""}}]' bindtap="clickDay" data-item="{{item}}">
           <view class='date-head'>
             <text class='{{item.disable ? "disable" : ""}}'>{{item.dateNum}}</text>
+            <view wx:if="{{item.watering}}" class="watering"></view>
           </view>
         </view>
       </block>
     </view>
     
     <view class='to-feed-sheep'>
-      <van-button round type="primary" block bind:click="toFeedSheep">去浇水</van-button>
+    <van-button round type="primary" block bind:click="toFeedSheep" disabled="{{waterBtnDisable}}">{{waterBtnText}}</van-button>
     </view>
   </view>
 
@@ -64,4 +65,5 @@
       bind:confirm="confirmDate"
     />
     </van-action-sheet>
+    <van-dialog id="van-dialog" />
 </view>

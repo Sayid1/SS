@@ -35,17 +35,11 @@ Page({
       '已提现200元专享福利',
     ],
     interval: null,
-    inviterId: ''
-  },
-  onHide() {
-    console.log('hide')
+    inviterId: '',
+    isHideForAd: true,
   },
   onUnload() {
     clearInterval(this.data.interval)
-    console.log('onUnload')
-  },
-  onShow() {
-    console.log('show')
   },
   getRandom(start, end) {
     start = Number(start)
@@ -54,9 +48,6 @@ Page({
   },
   miniJumpSuccess() {
     console.log('miniJumpSuccess')
-  },
-  miniJumpFail(e) {
-    console.log(e)
   },
   cash() {
     Dialog.alert({
@@ -72,7 +63,8 @@ Page({
       message: `此福利需邀请${num}人才可领取`,
       confirmButtonText: '去邀请',
       cancelButtonText: '知道了',
-      showCancelButton: true
+      showCancelButton: true,
+      confirmButtonOpenType: 'share'
     })
   },
   watering: function () {
@@ -138,8 +130,7 @@ Page({
     }, 3500)
   },
   onReady() {
-    console.log('onready')
-    const interval = setInterval(this.amimationMock, 2700)
+    const interval = setInterval(this.amimationMock, 2900)
     this.setData({
       interval
     })
@@ -159,8 +150,17 @@ Page({
     animationMock.translateX('-100%').translateY(3).step({
       duration: 0
     })
+    let mock = this.data.randomData[this.getRandom(1, 4)]
+    let placeholder = mock.match(/\d+,\d+/)
+    if (placeholder) {
+      let num = placeholder[0].split(',')
+      num = this.getRandom(...num)
+      mock = mock.replace(placeholder, num)
+    } 
     this.setData({
-      animationMock: animationMock.export()
+      animationMock: animationMock.export(),
+      mock,
+      avatarIndex: this.getRandom(1, 4),
     })
   },
   onLoad(query) {
@@ -171,17 +171,8 @@ Page({
     }).catch(err => console.log(err))
 
     let inviterId = query.inviter_id || ''
-    let mock = this.data.randomData[this.getRandom(1, 4)]
-    let placeholder = mock.match(/\d+,\d+/)
-    if (placeholder) {
-      let num = placeholder[0].split(',')
-      num = this.getRandom(...num)
-      mock = mock.replace(placeholder, num)
-    } 
     this.setData({
-      inviterId,
-      mock,
-      avatarIndex: this.getRandom(1, 4),
+      inviterId
     })
     const token = wx.getStorageSync(TOKEN_KEY)
     if (!token) {
@@ -198,7 +189,7 @@ Page({
     this.setData({
       watered: res1.data.data.isWater
     })
-    if (!res1.data.data.isWater) { // 如果今天未完成浇水任务
+    if (!res1.data.data.isWater && this.data.isHideForAd) { // 如果今天未完成浇水任务
       wx.onAppHide(() => {
         clearTimeout(wateTimeoutId)
         wateTimeoutId = setTimeout(() => {
@@ -216,7 +207,7 @@ Page({
       })
       wx.onAppShow(() => {
         clearTimeout(wateTimeoutId)
-        if (!this.data.watered) {
+        if (!this.data.watered && this.data.isHideForAd) {
           wx.showToast({
             title: "请至少体验10s",
             icon: "none",
@@ -225,6 +216,7 @@ Page({
             mask: false
           })
         }
+        this.setData({ isHideForAd: true })
       })
     }
     const res2 = await Api.isNeededPatchWater()
@@ -320,6 +312,7 @@ Page({
     })
   },
   onShareAppMessage() {
+    this.setData({ isHideForAd: false })
     return {
       path: "/pages/index/index?user_id=" + wx.getStorageSync(USER_ID)
     }

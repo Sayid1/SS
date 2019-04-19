@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/success/success",
     "pages/index/index",
-    "pages/friends/friends",
     "pages/calendar/calendar",
+    "pages/success/success",
+    "pages/friends/friends",
     "pages/rule/rule",
     "pages/mine/mine"
   ],

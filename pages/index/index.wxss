@@ -193,26 +193,18 @@
 .mock image {
   width:20px;
   height:20px;
-  margin-left: 3px;
+  margin: 0 3px;
   border-radius:50%;
 }
-.finished {
+.abc {
+  position: relative;
+}
+.abc view {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: #64BF7F;
-  z-index: 999;
-  opacity: .9;
-  border-radius: 7px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.finished image {
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  z-index: 1000;
+  background: red;
+  /* z-index: 99999; */
 }
