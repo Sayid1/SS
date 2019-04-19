@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "天天挣钱",
+  "navigationBarTitleText": "个人中心",
   "usingComponents": {
     "van-tag": "../../dist/tag/index",
     "van-progress": "../../dist/progress/index",
