@@ -59,7 +59,9 @@
         <text class="invite-2">即可获取一张补浇水卡</text>
       </view>
       <view class="right">
-        <view class="invite"><text class="invite-revord-text">邀请记录</text><van-icon name="arrow" color="#878787" /></view>
+        <navigator url="/pages/friends/friends">
+          <view class="invite" bindtap="toFriends"><text class="invite-revord-text">邀请记录</text><van-icon name="arrow" color="#878787" /></view>
+        </navigator>
         <van-button custom-class="invite-btn" round type="danger" size="small">立即邀请</van-button>
       </view>
     </view>

@@ -12,6 +12,7 @@ import Toast from '../../dist/toast/toast'
 import regeneratorRuntime from '../../utils/runtime.js'
 const app = getApp()
 
+let wateTimeoutId
 Page({
   data: {
     animationMock: '',
@@ -23,8 +24,8 @@ Page({
     showPacket1: false,
     showPacket2: false,
     taskDialog: false,
-    water: false,
-    watered: false,
+    water: false, // 浇水中 
+    watered: false, // 是否已完成浇水任务
     mock: '',
     avatarIndex: '',
     randomData: [
@@ -34,22 +35,19 @@ Page({
       '已提现200元专享福利',
     ],
     interval: null,
-    inviterId: ''
-  },
-  onHide() {
-    console.log('hide')
+    inviterId: '',
+    isHideForAd: true,
   },
   onUnload() {
     clearInterval(this.data.interval)
-    console.log('onUnload')
-  },
-  onShow() {
-    console.log('show')
   },
   getRandom(start, end) {
     start = Number(start)
     end = Number(end)
     return Math.floor(Math.random()*(start - end) + end)
+  },
+  miniJumpSuccess() {
+    console.log('miniJumpSuccess')
   },
   cash() {
     Dialog.alert({
@@ -65,11 +63,9 @@ Page({
       message: `此福利需邀请${num}人才可领取`,
       confirmButtonText: '去邀请',
       cancelButtonText: '知道了',
-      showCancelButton: true
+      showCancelButton: true,
+      confirmButtonOpenType: 'share'
     })
-  },
-  adc() {
-    console.log('click ad')
   },
   watering: function () {
     if (this.data.watered) {
@@ -129,14 +125,12 @@ Page({
     setTimeout(() => {
       this.setData({
         taskDialog: true,
-        water: false,
-        watered: true // TODO 已经完成浇水 这里暂时这样写
+        water: false
       })
     }, 3500)
   },
   onReady() {
-    console.log('onready')
-    const interval = setInterval(this.amimationMock, 2700)
+    const interval = setInterval(this.amimationMock, 2900)
     this.setData({
       interval
     })
@@ -156,8 +150,17 @@ Page({
     animationMock.translateX('-100%').translateY(3).step({
       duration: 0
     })
+    let mock = this.data.randomData[this.getRandom(1, 4)]
+    let placeholder = mock.match(/\d+,\d+/)
+    if (placeholder) {
+      let num = placeholder[0].split(',')
+      num = this.getRandom(...num)
+      mock = mock.replace(placeholder, num)
+    } 
     this.setData({
-      animationMock: animationMock.export()
+      animationMock: animationMock.export(),
+      mock,
+      avatarIndex: this.getRandom(1, 4),
     })
   },
   onLoad(query) {
@@ -168,17 +171,8 @@ Page({
     }).catch(err => console.log(err))
 
     let inviterId = query.inviter_id || ''
-    let mock = this.data.randomData[this.getRandom(1, 4)]
-    let placeholder = mock.match(/\d+,\d+/)
-    if (placeholder) {
-      let num = placeholder[0].split(',')
-      num = this.getRandom(...num)
-      mock = mock.replace(placeholder, num)
-    } 
     this.setData({
-      inviterId,
-      mock,
-      avatarIndex: this.getRandom(1, 4),
+      inviterId
     })
     const token = wx.getStorageSync(TOKEN_KEY)
     if (!token) {
@@ -195,6 +189,36 @@ Page({
     this.setData({
       watered: res1.data.data.isWater
     })
+    if (!res1.data.data.isWater && this.data.isHideForAd) { // 如果今天未完成浇水任务
+      wx.onAppHide(() => {
+        clearTimeout(wateTimeoutId)
+        wateTimeoutId = setTimeout(() => {
+          this.setData({
+            watered: true
+          })
+          wx.showToast({
+            title: "完成任务",
+            icon: "none",
+            image: "",
+            duration: 1500,
+            mask: false
+          })
+        }, 1e4)
+      })
+      wx.onAppShow(() => {
+        clearTimeout(wateTimeoutId)
+        if (!this.data.watered && this.data.isHideForAd) {
+          wx.showToast({
+            title: "请至少体验10s",
+            icon: "none",
+            image: "",
+            duration: 1500,
+            mask: false
+          })
+        }
+        this.setData({ isHideForAd: true })
+      })
+    }
     const res2 = await Api.isNeededPatchWater()
     if (res2.data.data.isWater) {
       Dialog.alert({
@@ -288,6 +312,7 @@ Page({
     })
   },
   onShareAppMessage() {
+    this.setData({ isHideForAd: false })
     return {
       path: "/pages/index/index?user_id=" + wx.getStorageSync(USER_ID)
     }

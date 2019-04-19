@@ -1,0 +1,21 @@
+<view class="container">
+  <view class="title"><text>邀请记录 ({{list.length}})</text></view>
+  <block wx:if="{{list.length > 0}}">
+    <view class="row" wx:for="{{list}}" wx:key="{{item.user_id}}" >
+      <view class="avatar_wrap">
+        <image class="avatar" src="{{item.avatarUrl}}" />
+        <view class="info">
+          <text class="name">{{item.nickName}}</text>
+          <text class="date">{{item.create_time}}</text>
+        </view>
+      </view>
+      <view class="desc">
+        <text class="tip">补浇水卡</text>
+        <text >+1</text>
+      </view>
+    </view>
+  </block>
+  <view wx:else class="empty">
+    <text>暂无邀请记录</text>
+  </view>
+</view>

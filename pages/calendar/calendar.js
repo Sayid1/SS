@@ -1,7 +1,11 @@
 import {
   USER_ID
 } from '../../utils/config/config.js'
+import Api from '/../../utils/config/api.js'
+import regeneratorRuntime from '../../utils/runtime.js'
+import Dialog from '../../dist/dialog/dialog'
 
+let waterCalendar
 Page({
   data: {
     year: 0,
@@ -16,17 +20,33 @@ Page({
     currentDate: new Date().getTime(),
     minDate: new Date().getTime() - 31536000000,
     maxDate: new Date().getTime() + 31536000000,
+    cardNum: 0,
+    waterCalendar: [],
+    waterBtnText: '去浇水',
+    waterBtnDisable: true
   },
-  onLoad: function () {
-    let now = new Date();
-    let year = now.getFullYear();
-    let month = now.getMonth() + 1;
-    this.dateInit();
+  async onShow() {
+    Api.getPatchCard().then(res => {
+      this.setData({
+        cardNum: res.data.data.cardNum
+      })
+    })
+    const res = await Api.waterRecord()
+    const waterRecords = res.data.data.waterRecords || []
+    waterCalendar = waterRecords.map(item => item.date)
+
+    let now = new Date()
+    let year = now.getFullYear()
+    let month = now.getMonth() + 1
+    let today = year + '-' + ('' + month).padStart(2, 0) + '-' + ('' + now.getDate()).padStart(2, 0)
+
+    this.dateInit()
     this.setData({
       year: year,
       month: month,
-      selectedDay: '' + year + ('' + month).padStart(2, 0) + ('' + now.getDate()).padStart(2, 0),
-      isToday: '' + year + ('' + month).padStart(2, 0) + ('' + now.getDate()).padStart(2, 0)
+      selectedDay: today,
+      isToday: today,
+      waterBtnDisable: waterCalendar.includes(today)
     })
   },
   dateInit: function (setYear, setMonth) {
@@ -42,16 +62,19 @@ Page({
     let endWeek = new Date(year + ',' + (month + 1) + ',' + dayNums).getDay(); //目标月最后一天对应的星期
     let today = +new Date()
     let obj = {};
+    let isToday
     if (month + 1 > 11) {
       nextYear = year + 1;
       dayNums = new Date(nextYear, nextMonth, 0).getDate();
     }
     for (let i = 1; i <= dayNums; i++) {
+      isToday = year + '-' + ('' + (month + 1)).padStart(2, 0) + '-' + ('' + i).padStart(2, 0)
       obj = {
-        isToday: '' + year + ('' + (month + 1)).padStart(2, 0) + ('' + i).padStart(2, 0),
+        isToday: isToday,
         dateNum: i,
         weight: 5,
-        disable: +new Date(year, month, i, 23, 23, 59) < today
+        disable: +new Date(year, month, i, 23, 23, 59) < today,
+        watering: waterCalendar.includes(isToday)
       }
       dateArr.push(obj);
     }
@@ -59,11 +82,13 @@ Page({
       let lastDayNums = new Date(year, month, 0).getDate(); // 获取上一个月有多少天
 
       for (let i = 0; i < startWeek; i++) {
+        isToday = year + '-' + ('' + month).padStart(2, 0) + '-' + ('' + lastDayNums).padStart(2, 0)
         dateArr.unshift({
-          isToday: '' + year + ('' + month).padStart(2, 0) + ('' + lastDayNums).padStart(2, 0), // TODO 上一年
+          isToday: isToday, // TODO 上一年
           dateNum: lastDayNums--,
           weight: 5,
-          disable: true
+          disable: true,
+          watering: waterCalendar.includes(isToday)
         })
       }
     }
@@ -71,11 +96,13 @@ Page({
       let j = 0
       for (let i = endWeek; i < 6; i++) {
         let afterNextMonth = (nextMonth + 1) > 11 ? 1 : (nextMonth + 1);
+        isToday = year + '-' + ('' + afterNextMonth).padStart(2, 0) + '-' + ('' + ++j).padStart(2, 0)
         dateArr.push({
-          isToday: '' + year + ('' + afterNextMonth).padStart(2, 0) + ('' + ++j).padStart(2, 0), // TODO 上一年
+          isToday: isToday, // TODO 上一年
           dateNum: j,
           weight: 5,
-          disable: true
+          disable: true,
+          watering: waterCalendar.includes(isToday)
         })
       }
     }
@@ -127,9 +154,22 @@ Page({
     this.dateInit(year, month);
   },
   toFeedSheep() {
-    wx.switchTab({
-      url: "/pages/index/index"
-    })
+    if (this.data.waterBtnText === '去浇水') {
+      wx.switchTab({
+        url: "/pages/index/index"
+      })
+    } else {
+      Dialog.confirm({
+        title: '',
+        message: '是否消耗一张补浇水卡进行补浇水'
+      }).then(() => {
+        console.log('quer')
+        // on confirm
+      }).catch(() => {
+        console.log('quxiao')
+        // on cancel
+      });
+    }
   },
   openDateSheet() {
     this.setData({
@@ -153,24 +193,40 @@ Page({
     })
   },
   clickDay(e) {
-    var date = e.currentTarget.dataset.date
+    var obj = e.currentTarget.dataset.item
+    var date = obj.isToday
     var year = Number(date.substr(0, 4))
-    var month = Number(date.substr(4, 2))
-    var month = Number(date.substr(4, 2))
-    var day = Number(date.substr(6))
+    var month = Number(date.substr(5, 2))
+    var day = Number(date.substr(8))
+
+    var data
     if (year !== this.data.year || month !== this.month) {
-      this.setData({
+      data = {
         year,
         month,
         selectedDay: date
-      })
+      }
       this.dateInit(year, month - 1);
     } else {
-      this.setData({
-
+      data = {
         selectedDay: date
-      })
+      }
     }
+    if (obj.watering) {
+      data.waterBtnText = '已浇水'
+      data.waterBtnDisable = true
+    } else if (this.data.isToday === date){
+      data.waterBtnText = '去浇水'
+      data.waterBtnDisable = false
+    } else if (new Date(date) > new Date()) {
+      data.waterBtnText = '未开始'
+      data.waterBtnDisable = true
+    } else {
+      data.waterBtnDisable = false
+      data.waterBtnText = '去补水'
+    }
+
+    this.setData(data)
   },
   onShareAppMessage() {
     return {

@@ -73,6 +73,17 @@
   height: 80rpx;
   line-height: 80rpx;
   font-size: 12pt;
+  position: relative;
+}
+.date-head .watering {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #8FB1F0;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%)
 }
 
 .nowDay .date-head{

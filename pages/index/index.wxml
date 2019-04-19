@@ -91,6 +91,7 @@
             </view>
           </view>
         </view>
+        <van-button round type="primary">完成上述任务并浇水</van-button>
       </view>
     </van-dialog>
     <van-dialog
