@@ -1,6 +1,8 @@
 {
   "pages": [
+    "pages/success/success",
     "pages/index/index",
+    "pages/friends/friends",
     "pages/calendar/calendar",
     "pages/rule/rule",
     "pages/mine/mine"
@@ -37,5 +39,12 @@
       }
     ]
   },
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "navigateToMiniProgramAppIdList": [
+    "wx18a2ac992306a5a4",
+    "wx1bf3779b3f8083a9",
+    "wx01bb1ef166cd3f4e",
+    "wx36baeb2bf2e96e0e",
+    "wxd04894261e7e8b21"
+  ]
 }

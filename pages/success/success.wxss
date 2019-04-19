@@ -1,0 +1,28 @@
+.container {
+  background: #F7F8F9;
+}
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 30px;
+}
+.main .success-img {
+  width: 15vw;
+  /* height: 30; */
+}
+.feed-days {
+  color: #000;
+  margin: 20px 0;
+  letter-spacing: 1px;
+}
+.main .progess {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

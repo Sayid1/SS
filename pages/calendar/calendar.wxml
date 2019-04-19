@@ -1,6 +1,6 @@
 <!-- 日历年月 -->
 <view class='container'>
-  <view class="consecutive-days"><text class="feed-days">已连续喂羊<text class="days">1</text>天</text></view>
+  <view class="consecutive-days"><text class="feed-days">已连续浇水<text class="days">1</text>天</text></view>
   <view class='calendar_title flex_nowrap'>
     <view class='icon' bindtap='lastMonth'>
       <van-icon name="arrow-left" color="gray" size="20px" />
@@ -30,15 +30,15 @@
     </view>
     
     <view class='to-feed-sheep'>
-      <van-button round type="primary" block bind:click="toFeedSheep">去喂羊</van-button>
+      <van-button round type="primary" block bind:click="toFeedSheep">去浇水</van-button>
     </view>
   </view>
 
   <view class='footer'>
     <view class="replenish">
       <view class="card">
-        <text>我的补喂羊卡：0</text>
-        <text class="gray remark">每邀请一个好友即可获得一张补喂羊卡</text>
+        <text>我的补浇水卡：{{cardNum}}</text>
+        <text class="gray remark">每邀请一个好友即可获得一张补浇水卡</text>
       </view>
       <van-button round plain type="primary" size="small">邀请好友</van-button>
     </view>

@@ -12,6 +12,7 @@ import Toast from '../../dist/toast/toast'
 import regeneratorRuntime from '../../utils/runtime.js'
 const app = getApp()
 
+let wateTimeoutId
 Page({
   data: {
     animationMock: '',
@@ -23,8 +24,8 @@ Page({
     showPacket1: false,
     showPacket2: false,
     taskDialog: false,
-    water: false,
-    watered: false,
+    water: false, // 浇水中 
+    watered: false, // 是否已完成浇水任务
     mock: '',
     avatarIndex: '',
     randomData: [
@@ -51,6 +52,12 @@ Page({
     end = Number(end)
     return Math.floor(Math.random()*(start - end) + end)
   },
+  miniJumpSuccess() {
+    console.log('miniJumpSuccess')
+  },
+  miniJumpFail(e) {
+    console.log(e)
+  },
   cash() {
     Dialog.alert({
       title: '提现失败',
@@ -67,9 +74,6 @@ Page({
       cancelButtonText: '知道了',
       showCancelButton: true
     })
-  },
-  adc() {
-    console.log('click ad')
   },
   watering: function () {
     if (this.data.watered) {
@@ -129,8 +133,7 @@ Page({
     setTimeout(() => {
       this.setData({
         taskDialog: true,
-        water: false,
-        watered: true // TODO 已经完成浇水 这里暂时这样写
+        water: false
       })
     }, 3500)
   },
@@ -195,6 +198,35 @@ Page({
     this.setData({
       watered: res1.data.data.isWater
     })
+    if (!res1.data.data.isWater) { // 如果今天未完成浇水任务
+      wx.onAppHide(() => {
+        clearTimeout(wateTimeoutId)
+        wateTimeoutId = setTimeout(() => {
+          this.setData({
+            watered: true
+          })
+          wx.showToast({
+            title: "完成任务",
+            icon: "none",
+            image: "",
+            duration: 1500,
+            mask: false
+          })
+        }, 1e4)
+      })
+      wx.onAppShow(() => {
+        clearTimeout(wateTimeoutId)
+        if (!this.data.watered) {
+          wx.showToast({
+            title: "请至少体验10s",
+            icon: "none",
+            image: "",
+            duration: 1500,
+            mask: false
+          })
+        }
+      })
+    }
     const res2 = await Api.isNeededPatchWater()
     if (res2.data.data.isWater) {
       Dialog.alert({

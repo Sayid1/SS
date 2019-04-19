@@ -1,6 +1,7 @@
 import {
   USER_ID
 } from '../../utils/config/config.js'
+import Api from '/../../utils/config/api.js'
 
 Page({
   data: {
@@ -16,6 +17,14 @@ Page({
     currentDate: new Date().getTime(),
     minDate: new Date().getTime() - 31536000000,
     maxDate: new Date().getTime() + 31536000000,
+    cardNum: 0
+  },
+  onShow() {
+    Api.getPatchCard().then(res => {
+      this.setData({
+        cardNum: res.data.data.cardNum
+      })
+    })
   },
   onLoad: function () {
     let now = new Date();

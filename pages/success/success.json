@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "van-progress": "../../dist/progress/index",
+    "van-button": "../../dist/button/index"
+  },
+  "navigationBarBackgroundColor": "#F7F8F9",
+  "navigationBarTextStyle": "black",
+  "backgroundColor": "#F7F8F9",
+  "navigationBarTitleText": "浇水成功"
+}

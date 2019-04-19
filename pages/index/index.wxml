@@ -58,7 +58,7 @@
     </view>
     <van-dialog
       use-slot
-      show="{{ taskDialog }}"
+      show="{{ true }}"
       show-confirm-button="{{false}}"
       close-on-click-overlay="{{true}}"
     >
@@ -66,6 +66,9 @@
         <text class="title">请完成以下任务再浇水</text>
         <text class="tasks">今日任务（0/2）</text>
         <view class="ad-warp">
+          <!-- <view class="finished">
+            <image src="../../assets/image/finished.png"></image>
+          </view> -->
           <view class="tips">
             <image src="../../assets/image/handle2.png" class="handle" />
             <text>点击图片，10秒后返回即可</text>
@@ -76,21 +79,27 @@
           </view>
         </view>
         <view class="ad-warp">
+          <!-- <view class="finished">
+            <image src="../../assets/image/finished.png"></image>
+          </view> -->
           <view class="tips">
             <image src="../../assets/image/handle2.png" class="handle" />
             <text>点击图片，10秒后返回即可</text>
           </view>
-          <view class="outside-app">
-            <view>
-              <text class="slogan">体验</text>
-              <text class="app-name-ad">天天喂羊</text>
-              <text class="slogan">小程序</text>
+          <navigator appId="wx1bf3779b3f8083a9" bindsuccess="miniJumpSuccess" bindfail="miniJumpFail" open-type="navigate" target="miniProgram">
+            <view class="outside-app">
+              <view>
+                <text class="slogan">体验</text>
+                <text class="app-name-ad">天天喂羊</text>
+                <text class="slogan">小程序</text>
+              </view>
+              <view class="circle">
+                <text>GO</text>
+              </view>
             </view>
-            <view class="circle">
-              <text>GO</text>
-            </view>
-          </view>
+          </navigator>
         </view>
+        <van-button round type="primary">完成上述任务,并浇水</van-button>
       </view>
     </van-dialog>
     <van-dialog
