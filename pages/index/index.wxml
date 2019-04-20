@@ -53,9 +53,9 @@
         <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
     </view>
 
-    <view class="bottom-change-list__ad">
+    <!-- <view class="bottom-change-list__ad">
       <ad unit-id="adunit-4ffe795461054bab"></ad>
-    </view>
+    </view> -->
     <van-dialog
       use-slot
       show="{{ taskDialog }}"

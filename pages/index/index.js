@@ -164,11 +164,11 @@ Page({
     })
   },
   onLoad(query) {
-    Api.waterRecord({}).then((res) => {
-      console.log(res)
-      res = res.data
+    // Api.waterRecord({}).then((res) => {
+    //   console.log(res)
+    //   res = res.data
 
-    }).catch(err => console.log(err))
+    // }).catch(err => console.log(err))
 
     let inviterId = query.inviter_id || ''
     this.setData({

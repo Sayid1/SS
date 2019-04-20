@@ -1,5 +1,5 @@
 // var BASEURL = "https://merge.shawn-zheng.com/"; //正式服务器
-var BASEURL = "http://water.youmahe.top/"; //正式服务器
+var BASEURL = "https://water.youmahe.top/"; //正式服务器
 const tokenKey = 'water_token';
 const userId = 'user_id';
 var token = wx.getStorageSync('token');
