@@ -65,10 +65,11 @@
   font-size: 0;
   border-radius: 8px;
   background: transparent;
+  text-align: center;
 }
 .packet image {
-  width: 85vw;
-  height: 60vh;
+  width: 70vw;
+  height: 55vh;
 }
 .login {
   position:absolute;

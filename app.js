@@ -1,7 +1,6 @@
 //app.js
 App({
   onLaunch: function (e) {
-    console.log(e)
     // 获取用户信息
     wx.getSetting({
       success: res => {

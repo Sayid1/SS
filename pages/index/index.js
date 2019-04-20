@@ -27,6 +27,7 @@ Page({
     taskDialog: false,
     water: false, // 浇水中 
     watered: false, // 是否已完成浇水任务
+    finishOne: false, // shifou wancheng le dangqian dianji de renwu
     mock: '',
     avatarIndex: '',
     randomData: [
@@ -38,7 +39,20 @@ Page({
     interval: null,
     inviterId: '',
     miniProgramJump: false,
-    finisedhTask: []
+    finisedhTask: [],
+    adTaskFinished: false,
+    miniProgramTaskFinished: false,
+    hideAd: false,
+    taskLen: 2
+  },
+  adLoadError() {
+    let finisedhTask = this.data.finisedhTask
+    finisedhTask = finisedhTask.filter(task => task !== 'ad')
+    this.setData({
+      hideAd: true,
+      taskLen: 1,
+      finisedhTask,
+    })
   },
   onUnload() {
     clearInterval(this.data.interval)
@@ -131,6 +145,21 @@ Page({
       })
     }, 3500)
   },
+  onShow() {
+    let finisedhTask = this.data.finisedhTask
+    let data = {
+      hideAd: false,
+      taskLen: 2
+    }
+    var yyyymmdd = utils.YYYYMMDD
+    if (wx.getStorageSync('miniProgram_task') === yyyymmdd) finisedhTask.push('miniProgram')
+    if (wx.getStorageSync('ad_task') === yyyymmdd) finisedhTask.push('ad')
+    data.finisedhTask = Array.from(new Set(finisedhTask))
+
+    data.miniProgramTaskFinished = finisedhTask.includes('miniProgram')
+    data.adTaskFinished = finisedhTask.includes('ad')
+    this.setData(data)
+  },
   onReady() {
     const interval = setInterval(this.amimationMock, 2500)
     this.setData({
@@ -168,18 +197,9 @@ Page({
     })
   },
   onLoad(query) {
-    let finisedhTask = []
     let data = {}
+    data.inviterId = query.inviter_id || ''
 
-    if (wx.getStorageSync('miniProgram_task')) finisedhTask.push('miniProgram')
-    if (wx.getStorageSync('ad_task')) finisedhTask.push('ad')
-
-    data.finisedhTask = finisedhTask
-
-    let inviterId = query.inviter_id || ''
-    this.setData({
-      inviterId
-    })
     const token = wx.getStorageSync(TOKEN_KEY)
     if (!token) {
       wx.hideTabBar()
@@ -188,6 +208,7 @@ Page({
       this.init()
     } 
     this.setData(data)
+    wx.setStorageSync(HIDE_FOR_AD, true)
   },
   async init() {
     const res1 = await Api.isWaterToday()
@@ -196,21 +217,24 @@ Page({
     })
     if (!res1.data.data.isWater) { // 如果今天未完成浇水任务
       wx.onAppHide(() => {
-        console.log(wx.getStorageSync(HIDE_FOR_AD), typeof wx.getStorageSync(HIDE_FOR_AD))
-        console.log('onAppHide', this.route) 
         clearTimeout(wateTimeoutId)
         wateTimeoutId = setTimeout(() => {
-          let finisedhTask = [...this.data.finisedhTask]
-          let data = {}
-          if (this.data.miniProgramJump) {
-            wx.setStorageSync('miniProgram_task', true)
-            finisedhTask.push('miniProgram')
-          } else {
-            wx.setStorageSync('ad_task', true)
-            finisedhTask.push('ad')
+          let finisedhTask = this.data.finisedhTask
+          let yyyymmdd = utils.YYYYMMDD(new Date())
+          let data = {
+            finishOne: true
           }
-          data.finisedhTask = finisedhTask
-          if (wx.getStorageSync('miniProgram_task') && wx.getStorageSync('ad_task')) {
+          if (this.data.miniProgramJump) {
+            wx.setStorageSync('miniProgram_task', yyyymmdd)
+            finisedhTask.push('miniProgram')
+            data.miniProgramTaskFinished = true
+          } else {
+            wx.setStorageSync('ad_task', yyyymmdd)
+            finisedhTask.push('ad')
+            data.adTaskFinished = true
+          }
+          data.finisedhTask = Array.from(new Set(finisedhTask))
+          if (wx.getStorageSync('miniProgram_task') === yyyymmdd && wx.getStorageSync('ad_task') === yyyymmdd) {
             data.watered = true
           }
           this.setData(data)
@@ -221,12 +245,13 @@ Page({
             duration: 1500,
             mask: false
           })
+          console.log(this.data.finishOne,wx.getStorageSync(HIDE_FOR_AD) === true)
         }, 1e4)
       })
       wx.onAppShow(() => {
-        console.log('onAppShow', this.route)
         clearTimeout(wateTimeoutId)
-        if (!this.data.watered && wx.getStorageSync(HIDE_FOR_AD)) {
+        console.log(this.data.finishOne,wx.getStorageSync(HIDE_FOR_AD) === true)
+        if (!this.data.finishOne && wx.getStorageSync(HIDE_FOR_AD) === true) {
           wx.showToast({
             title: "请至少体验10s",
             icon: "none",
@@ -235,7 +260,7 @@ Page({
             mask: false
           })
         }
-        this.setData({ miniProgramJump: false })
+        this.setData({ miniProgramJump: false, finishOne: false })
         wx.setStorageSync(HIDE_FOR_AD, true)
       })
     }
@@ -261,11 +286,6 @@ Page({
     })
   },
   bindGetUserInfo: function () {
-    Toast.loading({
-      duration: 0,
-      loadingType: 'spinner',
-      zIndex: 3000
-    })
     const _this = this
     let token = wx.getStorageSync(TOKEN_KEY)
     if (!token) {
@@ -283,6 +303,11 @@ Page({
                   // 已经授权，可以直接调用 getUserInfo 获取头像昵称
                   wx.getUserInfo({
                     success: function (res) {
+                      Toast.loading({
+                        duration: 0,
+                        loadingType: 'spinner',
+                        zIndex: 3000
+                      })
                       console.log(res)
                       params.nickName = res.userInfo.nickName
                       params.avatarUrl = res.userInfo.avatarUrl
