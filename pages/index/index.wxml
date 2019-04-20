@@ -36,32 +36,27 @@
     </view>
 
     <view class="row disabled">
-        <view class="card">
-          <text>限时福利：<text class="money">￥1.00</text></text>
-          <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
-        </view>
-        <van-button bindtap="benefits" data-num="{{2}}" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp">点击领取</van-button>
-        <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
+      <view class="card">
+        <text>限时福利：<text class="money">￥1.00</text></text>
+        <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
+      </view>
+      <van-button bindtap="benefits" data-num="{{2}}" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp">点击领取</van-button>
+      <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
     </view>
 
-      <view class="row disabled">
-        <view class="card">
-          <text>专享福利：<text class="money">￥200</text></text>
-          <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
-        </view>
-        <van-button bindtap="benefits" data-num="{{1000}}" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp" >点击领取</van-button>
-        <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
+    <view class="row disabled">
+      <view class="card">
+        <text>专享福利：<text class="money">￥200</text></text>
+        <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
+      </view>
+      <van-button bindtap="benefits" data-num="{{1000}}" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp">点击领取</van-button>
+      <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
     </view>
-<!-- 
+    <!-- 
     <view class="bottom-change-list__ad">
       <ad unit-id="adunit-4ffe795461054bab"></ad>
     </view> -->
-    <van-dialog
-      use-slot
-      show="{{ taskDialog }}"
-      show-confirm-button="{{false}}"
-      close-on-click-overlay="{{true}}"
-    >
+    <van-dialog use-slot show="{{ taskDialog }}" show-confirm-button="{{false}}" close-on-click-overlay="{{true}}">
       <view class="task-dialog">
         <text class="title">请完成以下任务再浇水</text>
         <text class="tasks">今日任务（{{finisedhTask.length}}/{{taskLen}}）</text>
@@ -85,7 +80,7 @@
             <image src="../../assets/image/handle2.png" class="handle" />
             <text>点击图片，10秒后返回即可</text>
           </view>
-           <navigator appId="wx18a2ac992306a5a4" bindsuccess="miniJumpSuccess" bindtap="anonymousFunc0" open-type="navigate"  target="miniProgram">
+          <navigator appId="wx18a2ac992306a5a4" bindsuccess="miniJumpSuccess" bindtap="anonymousFunc0" open-type="navigate" target="miniProgram">
             <view class="outside-app">
               <view>
                 <text class="slogan">体验</text>
@@ -98,31 +93,21 @@
             </view>
           </navigator>
         </view>
-        <van-button round type="primary" disabled="{{finisedhTask.length !== taskLen}}">完成上述任务并浇水</van-button>
+        <van-button round type="primary" disabled="{{finisedhTask.length !== taskLen}}" bindtap='toFinish'>完成上述任务并浇水</van-button>
       </view>
     </van-dialog>
-    <van-dialog
-      class="packet"
-      use-slot
-      show="{{showPacket1}}"
-      showConfirmButton="{{false}}"
-    >
+    <van-dialog class="packet" use-slot show="{{showPacket1}}" showConfirmButton="{{false}}">
       <view>
         <image src="../../assets/image/4.png" />
         <button bindgetuserinfo="bindGetUserInfo" class='login' plain openType="getUserInfo"></button>
       </view>
     </van-dialog>
-    <van-dialog
-      class="packet"
-      use-slot
-      show="{{showPacket2}}"
-      showConfirmButton="{{false}}"
-    >
-     <view bindtap="closePacket2" >
-        <image src="../../assets/image/3.png"/>
+    <van-dialog class="packet" use-slot show="{{showPacket2}}" showConfirmButton="{{false}}">
+      <view bindtap="closePacket2">
+        <image src="../../assets/image/3.png" />
       </view>
     </van-dialog>
-  <van-dialog id="van-dialog" />
-  <van-toast id="van-toast" />
-</view>
+    <van-dialog id="van-dialog" />
+    <van-toast id="van-toast" />
+  </view>
 </view>

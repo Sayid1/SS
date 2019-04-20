@@ -197,6 +197,7 @@ Page({
     })
   },
   onLoad(query) {
+
     let data = {}
     data.inviterId = query.inviter_id || ''
 
@@ -209,6 +210,28 @@ Page({
     } 
     this.setData(data)
     wx.setStorageSync(HIDE_FOR_AD, true)
+
+  },
+  toFinish(){
+    var that = this;
+    if (this.data.finisedhTask.length === this.data.taskLen){
+      Api.finish({
+        code: 'tiantianjiaoshui'
+      }).then((res) => {
+        res = res.data;
+        if(res.res == 0){
+          wx.showToast({
+            title: '今天浇水完成',
+            duration:1200,
+          })
+          that.setData({
+            taskDialog:!1,
+            watered:!0
+          })
+        }
+      })
+    }
+
   },
   async init() {
     const res1 = await Api.isWaterToday()
