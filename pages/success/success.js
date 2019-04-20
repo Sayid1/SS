@@ -2,6 +2,7 @@ import {
   HIDE_FOR_AD
 } from '../../utils/config/config.js'
 import Dialog from '../../dist/dialog/dialog'
+import Api from '/../../utils/config/api.js'
 
 Page({
 
@@ -22,7 +23,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    Api.finish()
   },
 
   /**
@@ -73,6 +74,7 @@ Page({
   onShareAppMessage: function () {
     wx.setStorageSync(HIDE_FOR_AD, false)
     return {
+      title: "天天浇水",
       path: "/pages/index/index?user_id=" + wx.getStorageSync(USER_ID)
     }
   }

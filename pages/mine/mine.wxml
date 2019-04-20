@@ -62,7 +62,7 @@
         <navigator url="/pages/friends/friends">
           <view class="invite"><text class="invite-revord-text">邀请记录</text><van-icon name="arrow" color="#878787" /></view>
         </navigator>
-        <van-button custom-class="invite-btn" round type="danger" size="small">立即邀请</van-button>
+        <van-button custom-class="invite-btn" round type="danger" size="small" open-type="share">立即邀请</van-button>
       </view>
     </view>
 
