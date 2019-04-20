@@ -41,7 +41,7 @@
         <text>我的补浇水卡：{{cardNum}}</text>
         <text class="gray remark">每邀请一个好友即可获得一张补浇水卡</text>
       </view>
-      <van-button round plain type="primary" size="small">邀请好友</van-button>
+      <van-button round plain type="primary" size="small" open-type="share">邀请好友</van-button>
     </view>
 
     <view class="bottom-change-list__ad">

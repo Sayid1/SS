@@ -1,4 +1,4 @@
-      import {
+import {
   GLOBAL_API_DOMAIN,
   IMG_API,
   TOKEN_KEY,
@@ -44,6 +44,13 @@ Page({
     miniProgramTaskFinished: false,
     hideAd: false,
     taskLen: 2
+  },
+  finish() {
+    if (this.data.finisedhTask.length === this.data.taskLen) {
+      wx.navigateTo({
+        url: '/pages/success/success',
+      })
+    }
   },
   adLoadError() {
     let finisedhTask = this.data.finisedhTask
@@ -360,6 +367,7 @@ Page({
   onShareAppMessage() {
     wx.setStorageSync(HIDE_FOR_AD, false)
     return {
+      title: "天天浇水",
       path: "/pages/index/index?user_id=" + wx.getStorageSync(USER_ID)
     }
   }

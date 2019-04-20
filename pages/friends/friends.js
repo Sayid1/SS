@@ -76,6 +76,7 @@ Page({
   onShareAppMessage: function () {
     wx.setStorageSync(HIDE_FOR_AD, false)
     return {
+      title: "天天浇水",
       path: "/pages/index/index?user_id=" + wx.getStorageSync(USER_ID)
     }
   }

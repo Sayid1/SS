@@ -98,7 +98,7 @@
             </view>
           </navigator>
         </view>
-        <van-button round type="primary" disabled="{{finisedhTask.length !== taskLen}}">完成上述任务并浇水</van-button>
+        <van-button round type="primary" bindtap="finish" disabled="{{finisedhTask.length !== taskLen}}">完成上述任务并浇水</van-button>
       </view>
     </van-dialog>
     <van-dialog
