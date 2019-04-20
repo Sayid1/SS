@@ -1,4 +1,8 @@
-// pages/success/success.js
+import {
+  HIDE_FOR_AD
+} from '../../utils/config/config.js'
+import Dialog from '../../dist/dialog/dialog'
+
 Page({
 
   /**
@@ -7,7 +11,13 @@ Page({
   data: {
 
   },
-
+  cash() {
+    Dialog.alert({
+      title: '提现失败',
+      message: '已浇水N天，还需364天才可以提现，记得每天来浇水哟~',
+      confirmButtonText: '知道啦'
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -61,6 +71,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    wx.setStorageSync(HIDE_FOR_AD, false)
+    return {
+      path: "/pages/index/index?user_id=" + wx.getStorageSync(USER_ID)
+    }
   }
 })

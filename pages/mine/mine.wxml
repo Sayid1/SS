@@ -7,12 +7,12 @@
         <image bindtap="bindViewTap" src="{{userInfo.avatarUrl}}" mode="cover"></image>
         <view class="right">
           <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-          <text class="emphasis">已连续喂羊<text class="days">1</text>天</text>
+          <text class="emphasis">已连续浇水<text class="days">1</text>天</text>
         </view>
       </view>
 
       <van-tag mark color="#6190E8" class="tag" size="large">
-        <view class="tag-text"><text>今日未喂羊</text></view>
+        <view class="tag-text"><text>今日未浇水</text></view>
       </van-tag>
     </view>
 
@@ -27,11 +27,11 @@
       <view class="card">
         <text>新人福利：<text class="money">￥1000</text>（1/365）</text>
         <van-progress percentage="50" color="#6190E8" show-pivot="{{false}}" class="progess" />
-        <text>喂羊满365天即可提现</text>
+        <text>浇水满365天即可提现</text>
       </view>
       <view class="right">
         <van-button bindtap="cash" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn" disabled>提现</van-button>
-        <text class="need-days">还需喂羊364天</text>
+        <text class="need-days">还需浇水364天</text>
       </view>
     </view>
 
@@ -60,7 +60,7 @@
       </view>
       <view class="right">
         <navigator url="/pages/friends/friends">
-          <view class="invite" bindtap="toFriends"><text class="invite-revord-text">邀请记录</text><van-icon name="arrow" color="#878787" /></view>
+          <view class="invite"><text class="invite-revord-text">邀请记录</text><van-icon name="arrow" color="#878787" /></view>
         </navigator>
         <van-button custom-class="invite-btn" round type="danger" size="small">立即邀请</van-button>
       </view>

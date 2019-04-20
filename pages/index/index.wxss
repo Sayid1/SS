@@ -196,15 +196,21 @@
   margin: 0 3px;
   border-radius:50%;
 }
-.abc {
-  position: relative;
+
+.finished {
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+  background:#64bf7f;
+  opacity:.9;
+  border-radius:4px;
 }
-.abc view {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: red;
-  /* z-index: 99999; */
+.finished image {
+  width: 60px;
 }

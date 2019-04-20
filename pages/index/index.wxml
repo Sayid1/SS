@@ -5,7 +5,7 @@
     <image src="../../assets/image/2.png" class="kettle" animation="{{animationKettle}}" />
     <button form-type="submit" class="formid-kettle-btn" disabled="{{water}}" bindtap="watering"></button>
   </form>
-  <text class="raindrop-tips">今日已浇水</text>
+  <text class="raindrop-tips" wx:if="{{watered}}">今日已浇水</text>
   <image src="../../assets/image/5.png" class="raindrop" animation="{{animationRaindrop}}" />
 
   <!-- <view class="notice-bar">
@@ -52,8 +52,8 @@
         <van-button bindtap="benefits" data-num="{{1000}}" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp" >点击领取</van-button>
         <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
     </view>
-
-    <!-- <view class="bottom-change-list__ad">
+<!-- 
+    <view class="bottom-change-list__ad">
       <ad unit-id="adunit-4ffe795461054bab"></ad>
     </view> -->
     <van-dialog
@@ -66,32 +66,39 @@
         <text class="title">请完成以下任务再浇水</text>
         <text class="tasks">今日任务（0/2）</text>
         <view class="ad-warp">
+          <view class="finished" wx:if="{{finisedhTask.include('miniProgram')}}">
+            <image mode="widthFix" src='../../assets/image/finished.png'></image>
+          </view>
           <view class="tips">
             <image src="../../assets/image/handle2.png" class="handle" />
             <text>点击图片，10秒后返回即可</text>
           </view>
-          <view class="abc">
-            <view bindtap="adc"></view>
+          <view>
             <ad unit-id="adunit-4ffe795461054bab"></ad>
           </view>
         </view>
         <view class="ad-warp">
+          <view class="finished" wx:if="{{finisedhTask.include('ad')}}">
+            <image mode="widthFix" src='../../assets/image/finished.png'></image>
+          </view>
           <view class="tips">
             <image src="../../assets/image/handle2.png" class="handle" />
             <text>点击图片，10秒后返回即可</text>
           </view>
-          <view class="outside-app">
-            <view>
-              <text class="slogan">体验</text>
-              <text class="app-name-ad">天天喂羊</text>
-              <text class="slogan">小程序</text>
+           <navigator appId="wx18a2ac992306a5a4" bindsuccess="miniJumpSuccess" bindtap="anonymousFunc0" open-type="navigate"  target="miniProgram">
+            <view class="outside-app">
+              <view>
+                <text class="slogan">体验</text>
+                <text class="app-name-ad">天天喂羊</text>
+                <text class="slogan">小程序</text>
+              </view>
+              <view class="circle">
+                <text>GO</text>
+              </view>
             </view>
-            <view class="circle">
-              <text>GO</text>
-            </view>
-          </view>
+          </navigator>
         </view>
-        <van-button round type="primary">完成上述任务并浇水</van-button>
+        <van-button round type="primary" disabled="{{finisedhTask.length !== 2}}">完成上述任务并浇水</van-button>
       </view>
     </van-dialog>
     <van-dialog

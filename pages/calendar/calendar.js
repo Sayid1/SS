@@ -1,5 +1,6 @@
 import {
-  USER_ID
+  USER_ID,
+  HIDE_FOR_AD
 } from '../../utils/config/config.js'
 import Api from '/../../utils/config/api.js'
 import regeneratorRuntime from '../../utils/runtime.js'
@@ -25,6 +26,17 @@ Page({
     waterBtnText: '去浇水',
     waterBtnDisable: true
   },
+  onLoad() {
+
+    let now = new Date()
+    let year = now.getFullYear()
+    let month = now.getMonth() + 1
+    let today = year + '-' + ('' + month).padStart(2, 0) + '-' + ('' + now.getDate()).padStart(2, 0)
+
+    this.setData({
+      selectedDay: today
+    })
+  },
   async onShow() {
     Api.getPatchCard().then(res => {
       this.setData({
@@ -44,7 +56,6 @@ Page({
     this.setData({
       year: year,
       month: month,
-      selectedDay: today,
       isToday: today,
       waterBtnDisable: waterCalendar.includes(today)
     })
@@ -158,7 +169,7 @@ Page({
       wx.switchTab({
         url: "/pages/index/index"
       })
-    } else {
+    } else if (this.data.cardNum > 0){
       Dialog.confirm({
         title: '',
         message: '是否消耗一张补浇水卡进行补浇水'
@@ -168,7 +179,21 @@ Page({
       }).catch(() => {
         console.log('quxiao')
         // on cancel
-      });
+      })
+    } else {
+      Dialog.confirm({
+        title: '补浇水卡不足',
+        message: '每邀请一个好友即可获得一张补浇水卡，补浇水后可继续领取1000元现金',
+        confirmButtonText: '去邀请',
+        cancelButtonText: '放弃奖金',
+        confirmButtonOpenType: 'share'
+      }).then(() => {
+        console.log('去邀请')
+        // on confirm
+      }).catch(() => {
+        console.log('放弃奖金')
+        // on cancel
+      })
     }
   },
   openDateSheet() {
@@ -229,6 +254,7 @@ Page({
     this.setData(data)
   },
   onShareAppMessage() {
+    wx.setStorageSync(HIDE_FOR_AD, false)
     return {
       path: "/pages/index/index?user_id=" + wx.getStorageSync(USER_ID)
     }

@@ -1,8 +1,9 @@
-import {
+      import {
   GLOBAL_API_DOMAIN,
   IMG_API,
   TOKEN_KEY,
   USER_ID,
+  HIDE_FOR_AD,
   FROM_APP
 } from '../../utils/config/config.js'
 import Api from '/../../utils/config/api.js'
@@ -36,7 +37,8 @@ Page({
     ],
     interval: null,
     inviterId: '',
-    isHideForAd: true,
+    miniProgramJump: false,
+    finisedhTask: []
   },
   onUnload() {
     clearInterval(this.data.interval)
@@ -47,7 +49,7 @@ Page({
     return Math.floor(Math.random()*(start - end) + end)
   },
   miniJumpSuccess() {
-    console.log('miniJumpSuccess')
+    this.setData({ miniProgramJump: true })
   },
   cash() {
     Dialog.alert({
@@ -130,7 +132,7 @@ Page({
     }, 3500)
   },
   onReady() {
-    const interval = setInterval(this.amimationMock, 2900)
+    const interval = setInterval(this.amimationMock, 2500)
     this.setData({
       interval
     })
@@ -138,16 +140,18 @@ Page({
   },
   amimationMock() {
     const animationMock = wx.createAnimation({
+      delay: 0,
+      duration: 0,
       timingFunction: "ease"
     })
     animationMock.translateX(0).step({
       duration: 800
     })
     animationMock.translateY(-100).step({
-      delay: 800,
-      duration: 1000
+      delay: 1000,
+      duration: 600
     })
-    animationMock.translateX('-100%').translateY(3).step({
+    animationMock.translateX('-100%').translateY(0).step({
       duration: 0
     })
     let mock = this.data.randomData[this.getRandom(1, 4)]
@@ -164,11 +168,13 @@ Page({
     })
   },
   onLoad(query) {
-    // Api.waterRecord({}).then((res) => {
-    //   console.log(res)
-    //   res = res.data
+    let finisedhTask = []
+    let data = {}
 
-    // }).catch(err => console.log(err))
+    if (wx.getStorageSync('miniProgram_task')) finisedhTask.push('miniProgram')
+    if (wx.getStorageSync('ad_task')) finisedhTask.push('ad')
+
+    data.finisedhTask = finisedhTask
 
     let inviterId = query.inviter_id || ''
     this.setData({
@@ -177,25 +183,37 @@ Page({
     const token = wx.getStorageSync(TOKEN_KEY)
     if (!token) {
       wx.hideTabBar()
-      this.setData({
-        showPacket1: true,
-      })
+      data.showPacket1 = true
     } else {
       this.init()
     } 
+    this.setData(data)
   },
   async init() {
     const res1 = await Api.isWaterToday()
     this.setData({
       watered: res1.data.data.isWater
     })
-    if (!res1.data.data.isWater && this.data.isHideForAd) { // 如果今天未完成浇水任务
+    if (!res1.data.data.isWater) { // 如果今天未完成浇水任务
       wx.onAppHide(() => {
+        console.log(wx.getStorageSync(HIDE_FOR_AD), typeof wx.getStorageSync(HIDE_FOR_AD))
+        console.log('onAppHide', this.route) 
         clearTimeout(wateTimeoutId)
         wateTimeoutId = setTimeout(() => {
-          this.setData({
-            watered: true
-          })
+          let finisedhTask = [...this.data.finisedhTask]
+          let data = {}
+          if (this.data.miniProgramJump) {
+            wx.setStorageSync('miniProgram_task', true)
+            finisedhTask.push('miniProgram')
+          } else {
+            wx.setStorageSync('ad_task', true)
+            finisedhTask.push('ad')
+          }
+          data.finisedhTask = finisedhTask
+          if (wx.getStorageSync('miniProgram_task') && wx.getStorageSync('ad_task')) {
+            data.watered = true
+          }
+          this.setData(data)
           wx.showToast({
             title: "完成任务",
             icon: "none",
@@ -206,8 +224,9 @@ Page({
         }, 1e4)
       })
       wx.onAppShow(() => {
+        console.log('onAppShow', this.route)
         clearTimeout(wateTimeoutId)
-        if (!this.data.watered && this.data.isHideForAd) {
+        if (!this.data.watered && wx.getStorageSync(HIDE_FOR_AD)) {
           wx.showToast({
             title: "请至少体验10s",
             icon: "none",
@@ -216,7 +235,8 @@ Page({
             mask: false
           })
         }
-        this.setData({ isHideForAd: true })
+        this.setData({ miniProgramJump: false })
+        wx.setStorageSync(HIDE_FOR_AD, true)
       })
     }
     const res2 = await Api.isNeededPatchWater()
@@ -255,9 +275,10 @@ Page({
             let params = {
               code: res.code
             }
-            console.log(params)
+            console.log("login")
             wx.getSetting({
               success: function (res) {
+                console.log("success")
                 if (res.authSetting['scope.userInfo'] === true) {
                   // 已经授权，可以直接调用 getUserInfo 获取头像昵称
                   wx.getUserInfo({
@@ -295,7 +316,7 @@ Page({
                       }).catch(err => console.log(err))
                     },
                     fail(err) {
-                      console.log(err)
+                      console.log('fail')
                     }
                   })
                 }
@@ -312,7 +333,7 @@ Page({
     })
   },
   onShareAppMessage() {
-    this.setData({ isHideForAd: false })
+    wx.setStorageSync(HIDE_FOR_AD, false)
     return {
       path: "/pages/index/index?user_id=" + wx.getStorageSync(USER_ID)
     }

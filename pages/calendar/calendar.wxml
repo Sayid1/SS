@@ -31,7 +31,7 @@
     </view>
     
     <view class='to-feed-sheep'>
-    <van-button round type="primary" block bind:click="toFeedSheep" disabled="{{waterBtnDisable}}">{{waterBtnText}}</van-button>
+    <van-button round type="primary" block bind:click="toFeedSheep" disabled="{{waterBtnDisable}}">{{waterBtnText}}{{selectedDay}}</van-button>
     </view>
   </view>
 

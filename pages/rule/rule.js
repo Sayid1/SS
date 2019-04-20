@@ -1,5 +1,6 @@
 import {
-  USER_ID
+  USER_ID,
+  HIDE_FOR_AD
 } from '../../utils/config/config.js'
 Page({
 
@@ -63,6 +64,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    wx.setStorageSync(HIDE_FOR_AD, false)
     return {
       path: "/pages/index/index?user_id=" + wx.getStorageSync(USER_ID)
     }

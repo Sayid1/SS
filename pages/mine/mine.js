@@ -1,6 +1,7 @@
 import Dialog from '../../dist/dialog/dialog'
 import {
-  USER_ID
+  USER_ID,
+  HIDE_FOR_AD
 } from '../../utils/config/config.js'
 
 const app = getApp()
@@ -33,6 +34,7 @@ Page({
     })
   },
   onShareAppMessage() {
+    wx.setStorageSync(HIDE_FOR_AD, false)
     return {
       path: "/pages/index/index?user_id=" + wx.getStorageSync(USER_ID)
     }
