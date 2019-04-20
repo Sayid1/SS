@@ -3,16 +3,25 @@ import {
   USER_ID,
   HIDE_FOR_AD
 } from '../../utils/config/config.js'
+import Api from '/../../utils/config/api.js'
 
 const app = getApp()
 
 Page({
   data: {
-    userInfo: {}
+    userInfo: {},
+    watered: false
   },
   onLoad() {
     this.setData({
       userInfo: app.globalData.userInfo
+    })
+  },
+  onShow() {
+    Api.isWaterToday().then(res => {
+      this.setData({
+        watered: res.data.data.isWater
+      })
     })
   },
   cash() {

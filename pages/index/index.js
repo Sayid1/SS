@@ -249,6 +249,7 @@ Page({
       wx.onAppHide(() => {
         clearTimeout(wateTimeoutId)
         wateTimeoutId = setTimeout(() => {
+          if (!this.data.taskDialog) return
           let finisedhTask = this.data.finisedhTask
           let yyyymmdd = utils.YYYYMMDD(new Date())
           let data = {
@@ -275,13 +276,12 @@ Page({
             duration: 1500,
             mask: false
           })
-          console.log(this.data.finishOne,wx.getStorageSync(HIDE_FOR_AD) === true)
         }, 1e4)
       })
       wx.onAppShow(() => {
         clearTimeout(wateTimeoutId)
         console.log(this.data.finishOne,wx.getStorageSync(HIDE_FOR_AD) === true)
-        if (!this.data.finishOne && wx.getStorageSync(HIDE_FOR_AD) === true) {
+        if (this.data.taskDialog && !this.data.finishOne && wx.getStorageSync(HIDE_FOR_AD) === true) {
           wx.showToast({
             title: "请至少体验10s",
             icon: "none",
