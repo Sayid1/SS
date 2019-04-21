@@ -12,7 +12,7 @@
       </view>
 
       <van-tag mark color="#6190E8" class="tag" size="large">
-        <view class="tag-text"><text>今日未浇水</text></view>
+        <view class="tag-text"><text>今日{{watered ? '已' : '未'}}浇水</text></view>
       </van-tag>
     </view>
 

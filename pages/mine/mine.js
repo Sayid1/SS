@@ -3,31 +3,36 @@ import {
   USER_ID,
   HIDE_FOR_AD
 } from '../../utils/config/config.js'
+import Api from '/../../utils/config/api.js'
 
 const app = getApp()
 
 Page({
   data: {
-    userInfo: {}
+    userInfo: {},
+    watered: false
   },
   onLoad() {
     this.setData({
       userInfo: app.globalData.userInfo
     })
   },
-  tixian:function(){
+
+  tixian: function() {
     wx.showModal({
       title: '温馨提示',
       content: '可提现金额为0,请先去浇水获取奖励',
     })
   },
-  cash() {
-    Dialog.alert({
-      title: '提现失败',
-      message: '已浇水N天，还需364天才可以提现，记得每天来浇水哟~',
-      confirmButtonText: '知道啦'
+  onShow() {
+    Api.isWaterToday().then(res => {
+      this.setData({
+        watered: res.data.data.isWater
+      })
+
     })
   },
+
   benefits(e) {
     const num = e.target.dataset.num
     Dialog.alert({
