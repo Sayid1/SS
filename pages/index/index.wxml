@@ -56,7 +56,7 @@
     <view class="bottom-change-list__ad">
       <ad unit-id="adunit-4ffe795461054bab"></ad>
     </view> -->
-    <van-dialog use-slot show="{{ taskDialog }}" show-confirm-button="{{false}}" close-on-click-overlay="{{true}}">
+    <van-dialog use-slot show="{{ taskDialog }}" bind:close="closeTaskDialog" show-confirm-button="{{false}}" close-on-click-overlay="{{true}}">
       <view class="task-dialog">
         <text class="title">请完成以下任务再浇水</text>
         <text class="tasks">今日任务（{{finisedhTask.length}}/{{taskLen}}）</text>
@@ -80,7 +80,7 @@
             <image src="../../assets/image/handle2.png" class="handle" />
             <text>点击图片，10秒后返回即可</text>
           </view>
-          <navigator appId="wx18a2ac992306a5a4" bindsuccess="miniJumpSuccess" bindtap="anonymousFunc0" open-type="navigate" target="miniProgram">
+          <navigator appId="wx18a2ac992306a5a4" bindsuccess="miniJumpSuccess" open-type="navigate" target="miniProgram">
             <view class="outside-app">
               <view>
                 <text class="slogan">体验</text>
