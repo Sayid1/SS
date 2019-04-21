@@ -10,6 +10,8 @@
   position: absolute;
   right: 18px;
   top: 47%;
+  
+
 }
 .formid-kettle-btn, button[disabled] {
   position: absolute;

@@ -122,7 +122,8 @@ page {
   padding: 0 25px !important;
 }
 .cus-btn {
-  padding: 0 25px !important;
+  /* padding: 0 20px !important; */
+  width:170rpx;
 }
 .cus-btn-warp {
   margin-top: 7px;

@@ -26,9 +26,9 @@ const ALL_API = {
     url: 'isWaterToday'
   },
   //浇水任务
-  task: {
+  taskList: {
     method: 'POST',
-    url: 'task'
+    url: 'taskList'
   },
   //任务完成提交状态
   finish: {
@@ -49,6 +49,11 @@ const ALL_API = {
   waterRecord: {
     method: 'POST',
     url: 'waterRecord'
+  },
+  //补水
+  patchWater: {
+    method: 'POST',
+    url: 'patchWater'
   },
 }
 

@@ -16,14 +16,14 @@
       </van-tag>
     </view>
 
-    <view class="progess">
+    <!-- <view class="progess">
       <text class="gray">当前进度</text>
       <van-progress percentage="50" color="#6190E8" show-pivot="{{false}}" />
-    </view>
+    </view> -->
   </view>
 
   <view class="footer">
-    <view class="row">
+    <!-- <view class="row">
       <view class="card">
         <text>新人福利：<text class="money">￥1000</text>（1/365）</text>
         <van-progress percentage="50" color="#6190E8" show-pivot="{{false}}" class="progess" />
@@ -33,24 +33,33 @@
         <van-button bindtap="cash" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn" disabled>提现</van-button>
         <text class="need-days">还需浇水364天</text>
       </view>
-    </view>
+    </view> -->
 
-    <view class="row disabled">
+    <!-- <view class="row disabled">
       <view class="card">
         <text>限时福利：<text class="money">￥1.00</text></text>
         <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
       </view>
       <van-button bindtap="benefits" data-num="{{2}}" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp">点击领取</van-button>
       <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
-    </view>
+    </view> -->
 
-    <view class="row disabled">
+    <!-- <view class="row disabled">
       <view class="card">
         <text>专享福利：<text class="money">￥200</text></text>
         <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
       </view>
       <van-button bindtap="benefits" data-num="{{1000}}" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp" >点击领取</van-button>
       <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
+    </view> -->
+       <view class="row no-hd">
+      <view class="card">
+        <text class="invite-1">钱包</text>
+        <text class="invite-2">可提现金额 0.00元</text>
+      </view>
+      <view class="right" style='margin-right:15rpx;' bindtap='tixian'>
+        <text>提现</text>
+      </view>
     </view>
 
     <view class="row no-hd">
@@ -66,13 +75,13 @@
       </view>
     </view>
 
-    <view class="bottom-change-list__ad">
+    <!-- <view class="bottom-change-list__ad">
       <ad unit-id="adunit-4ffe795461054bab"></ad>
-    </view>
+    </view> -->
 
-    <view class="app-name">
+    <!-- <view class="app-name">
       <text>天天浇水</text>
-    </view>
+    </view> -->
   </view>
   <van-dialog id="van-dialog" />
 </view>

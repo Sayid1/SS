@@ -1,6 +1,8 @@
 <!-- 日历年月 -->
 <view class='container'>
-  <view class="consecutive-days"><text class="feed-days">已连续浇水<text class="days">1</text>天</text></view>
+  <view class="consecutive-days">
+    <text class="feed-days">已连续浇水<text class="days">1</text>天</text>
+  </view>
   <view class='calendar_title flex_nowrap'>
     <view class='icon' bindtap='lastMonth'>
       <van-icon name="arrow-left" color="gray" size="20px" />
@@ -21,7 +23,7 @@
 
     <view class='date-box'>
       <block wx:for='{{dateArr}}' wx:key='{{index}}'>
-        <view class='[{{isToday == item.isToday ? "nowDay" : ""}}, {{selectedDay == item.isToday ? "selectedDay" : ""}} {{item.disable ? "disable" : ""}}]' bindtap="clickDay" data-item="{{item}}">
+        <view class='[{{isToday == item.isToday ? "nowDay" : ""}}, {{selectedDay == item.isToday ? "selectedDay" : ""}} {{item.disable ? "disable" : ""}}]' bindtap="clickDay" data-item="{{item}}" data-index="{{index}}">
           <view class='date-head'>
             <text class='{{item.disable ? "disable" : ""}}'>{{item.dateNum}}</text>
             <view wx:if="{{item.watering}}" class="watering"></view>
@@ -29,9 +31,9 @@
         </view>
       </block>
     </view>
-    
+
     <view class='to-feed-sheep'>
-    <van-button round type="primary" block bind:click="toFeedSheep" disabled="{{waterBtnDisable}}">{{waterBtnText}}</van-button>
+      <van-button round type="primary" block bind:click="toFeedSheep" disabled="{{waterBtnDisable}}">{{waterBtnText}}</van-button>
     </view>
   </view>
 
@@ -53,17 +55,8 @@
     </view>
   </view>
 
-  <van-action-sheet
-    show="{{ showDateSheet }}"
-  >
-    <van-datetime-picker
-      type="year-month"
-      value="{{ currentDate }}"
-      min-date="{{minDate}}"
-      max-date="{{maxDate}}"
-      bind:cancel="closeDateSheet"
-      bind:confirm="confirmDate"
-    />
-    </van-action-sheet>
-    <van-dialog id="van-dialog" />
+  <van-action-sheet show="{{ showDateSheet }}">
+    <van-datetime-picker type="year-month" value="{{ currentDate }}" min-date="{{minDate}}" max-date="{{maxDate}}" bind:cancel="closeDateSheet" bind:confirm="confirmDate" />
+  </van-action-sheet>
+  <van-dialog id="van-dialog" />
 </view>

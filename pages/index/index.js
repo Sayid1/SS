@@ -43,7 +43,8 @@ Page({
     adTaskFinished: false,
     miniProgramTaskFinished: false,
     hideAd: false,
-    taskLen: 2
+    taskLen: 2,
+    tasks:[],
   },
   finish() {
     if (this.data.finisedhTask.length === this.data.taskLen) {
@@ -72,11 +73,18 @@ Page({
   miniJumpSuccess() {
     this.setData({ miniProgramJump: true })
   },
-  cash() {
+  cash(e) {
+    var days = e.target.dataset.days;
+    var leftdays = e.target.dataset.leftdays;
     Dialog.alert({
       title: '提现失败',
-      message: '已浇水N天，还需364天才可以提现，记得每天来浇水哟~',
+      message: '已浇水' + days + '天，还需' + leftdays+'天才可以提现，记得每天来浇水哟~',
       confirmButtonText: '知道啦'
+    })
+  },
+  totixian:function(){
+    wx.switchTab({
+      url: '../mine/mine',
     })
   },
   benefits(e) {
@@ -166,6 +174,19 @@ Page({
     data.miniProgramTaskFinished = finisedhTask.includes('miniProgram')
     data.adTaskFinished = finisedhTask.includes('ad')
     this.setData(data)
+    this.taskList();
+  },
+
+  //浇水任务列表
+  taskList(){
+    var that = this; 
+    Api.taskList({
+    }).then((res) => {
+      res = res.data
+      that.setData({
+        tasks:res.data
+      })
+    })
   },
   onReady() {
     const interval = setInterval(this.amimationMock, 2500)

@@ -46,7 +46,6 @@ Page({
     const res = await Api.waterRecord()
     const waterRecords = res.data.data.waterRecords || []
     waterCalendar = waterRecords.map(item => item.date)
-
     let now = new Date()
     let year = now.getFullYear()
     let month = now.getMonth() + 1
@@ -60,7 +59,7 @@ Page({
       waterBtnDisable: waterCalendar.includes(today)
     })
   },
-  dateInit: function (setYear, setMonth) {
+  dateInit: function(setYear, setMonth) {
     //全部时间的月份都是按0~11基准，显示月份才+1
     let dateArr = []; //需要遍历的日历数组数据
     let now = setYear ? new Date(setYear, setMonth) : new Date();
@@ -141,7 +140,7 @@ Page({
   /**
    * 上月切换
    */
-  lastMonth: function () {
+  lastMonth: function() {
     //全部时间的月份都是按0~11基准，显示月份才+1
     let year = this.data.month - 2 < 0 ? this.data.year - 1 : this.data.year;
     let month = this.data.month - 2 < 0 ? 11 : this.data.month - 2;
@@ -154,7 +153,7 @@ Page({
   /**
    * 下月切换
    */
-  nextMonth: function () {
+  nextMonth: function() {
     //全部时间的月份都是按0~11基准，显示月份才+1
     let year = this.data.month > 11 ? this.data.year + 1 : this.data.year;
     let month = this.data.month > 11 ? 0 : this.data.month;
@@ -165,16 +164,39 @@ Page({
     this.dateInit(year, month);
   },
   toFeedSheep() {
+    var that = this;
     if (this.data.waterBtnText === '去浇水') {
       wx.switchTab({
         url: "/pages/index/index"
       })
-    } else if (this.data.cardNum > 0){
+    } else if (this.data.cardNum > 0) {
       Dialog.confirm({
         title: '',
         message: '是否消耗一张补浇水卡进行补浇水'
       }).then(() => {
         console.log('quer')
+        Api.patchWater({
+          date: that.data.selectedDay
+        }).then(res => {
+          res = res.data;
+          if (res.res == 0) {
+            wx.showToast({
+              title: '补水成功',
+              duration: 1200,
+            })
+            waterCalendar.push(that.data.selectedDay);        
+            that.setData({
+              waterBtnText:'已浇水',
+              waterBtnDisable: true
+            })
+          } else {
+
+            wx.showToast({
+              title: '补水失败',
+              duration: 1200,
+            })
+          }
+        })
         // on confirm
       }).catch(() => {
         console.log('quxiao')
@@ -218,8 +240,10 @@ Page({
     })
   },
   clickDay(e) {
-    var obj = e.currentTarget.dataset.item
+    var obj = e.currentTarget.dataset.item;
+    var index = e.currentTarget.dataset.index;
     var date = obj.isToday
+    console.log(this.data.dateArr);
     var year = Number(date.substr(0, 4))
     var month = Number(date.substr(5, 2))
     var day = Number(date.substr(8))
@@ -240,7 +264,7 @@ Page({
     if (obj.watering) {
       data.waterBtnText = '已浇水'
       data.waterBtnDisable = true
-    } else if (this.data.isToday === date){
+    } else if (this.data.isToday === date) {
       data.waterBtnText = '去浇水'
       data.waterBtnDisable = false
     } else if (new Date(date) > new Date()) {

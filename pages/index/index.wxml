@@ -23,35 +23,137 @@
     </van-tag>
   </view>
   <view class="footer">
-    <view class="row">
+    <view class="row" wx:if="{{tasks.stage1 == 0}}">
       <view class="card">
-        <text>新人福利：<text class="money">￥1000</text>（1/365）</text>
-        <van-progress percentage="50" color="#6190E8" show-pivot="{{false}}" class="progess" />
-        <text>喂羊满365天即可提现</text>
+        <text>新人福利1：<text class="money">￥{{tasks.stage1Data.task_days_fee}}</text>（{{tasks.days}}/{{tasks.stage1Data.task_days}}）</text>
+        <van-progress percentage="{{tasks.stage1Data.process}}" color="#6190E8" show-pivot="{{false}}" class="progess" />
+        <text style='font-size:25rpx'>连续浇水{{tasks.stage1Data.task_days}}天即可提现</text>
       </view>
       <view class="right">
-        <van-button bindtap="cash" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn" disabled>提现</van-button>
-        <text class="need-days">还需喂羊364天</text>
+        <van-button bindtap="cash" data-days="{{tasks.days}}" data-leftdays='{{tasks.stage1Data.left_days}}' round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn" disabled>提现</van-button>
+        <text class="need-days" style='font-size:25rpx'>还需浇水{{tasks.stage1Data.left_days}}天</text>
       </view>
     </view>
 
-    <view class="row disabled">
+    <view class="row " wx:if="{{tasks.stage1 == 1}}">
+      <view class="card">
+        <text>新人福利1：<text class="money">￥{{tasks.stage1Data.task_days_fee}}</text>（{{tasks.stage1Data.task_days}}/{{tasks.stage1Data.task_days}}）</text>
+        <van-progress percentage="100" color="#6190E8" show-pivot="{{false}}" class="progess" />
+        <text style='font-size:25rpx'>连续浇水{{tasks.stage1Data.task_days}}天即可提现</text>
+      </view>
+      <view class="right">
+        <van-button bindtap="totixian" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn">去提现</van-button>
+        <text class="need-days" style='font-size:25rpx;text-align:center;'>浇水完成</text>
+      </view>
+    </view>
+
+    <!-- <view class="row disabled">
       <view class="card">
         <text>限时福利：<text class="money">￥1.00</text></text>
         <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
       </view>
       <van-button bindtap="benefits" data-num="{{2}}" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp">点击领取</van-button>
       <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
+    </view> -->
+    <view class="row" wx:if="{{tasks.stage1 == 0 && tasks.stage2 == 0}}">
+      <view class="card">
+        <text>新人福利2：<text class="money">￥{{tasks.stage2Data.task_days_fee}}</text>（0/{{tasks.stage2Data.task_days}}）</text>
+        <van-progress percentage="0" color="#6190E8" show-pivot="{{false}}" class="progess" />
+        <text style='font-size:25rpx'>连续浇水{{tasks.stage2Data.task_days}}天即可提现</text>
+      </view>
+      <view class="right">
+        <van-button bindtap="cash" data-days="{{tasks.days}}" data-leftdays='{{tasks.stage2Data.left_days}}' round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn" disabled>提现</van-button>
+        <text class="need-days" style='font-size:25rpx'>还需浇水{{tasks.stage2Data.task_days}}天</text>
+      </view>
+
+      <view style='position: absolute;width:100%;height:100%;  opacity: 0.5;background: #000;left:0;top:0;z-index:1;'></view>
+      <view style='position: absolute;width:450rpx;left:120rpx;top:45rpx;z-index:2;color:#fff;text-align:center;display:flex;overflow:hidden;'>
+        <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" style='width:60rpx;height:60rpx;' />
+        <text style='padding:17rpx 0 0 5rpx;font-size:25rpx;'>完成新人福利1可解锁</text>
+      </view>
     </view>
 
-    <view class="row disabled">
+    
+
+    <view class="row" wx:if="{{tasks.stage1 == 1 && tasks.stage2 == 0}}">
+      <view class="card">
+        <text>新人福利2：<text class="money">￥{{tasks.stage2Data.task_days_fee}}</text>（{{tasks.days}}/{{tasks.stage2Data.task_days}}）</text>
+        <van-progress percentage="{{tasks.stage2Data.process}}" color="#6190E8" show-pivot="{{false}}" class="progess" />
+        <text style='font-size:25rpx'>连续浇水{{tasks.stage1Data.task_days}}天即可提现</text>
+      </view>
+      <view class="right">
+        <van-button bindtap="cash" data-days="{{tasks.days}}" data-leftdays='{{tasks.stage2Data.left_days}}' round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn" disabled>提现</van-button>
+        <text class="need-days" style='font-size:25rpx'>还需浇水{{tasks.stage2Data.left_days}}天</text>
+      </view>
+    </view>
+
+    <view class="row " wx:if="{{tasks.stage1 == 1 && tasks.stage2 == 1}}">
+      <view class="card">
+        <text>新人福利2：<text class="money">￥{{tasks.stage2Data.task_days_fee}}</text>（{{tasks.stage2Data.task_days}}/{{tasks.stage2Data.task_days}}）</text>
+        <van-progress percentage="100" color="#6190E8" show-pivot="{{false}}" class="progess" />
+        <text style='font-size:25rpx'>连续浇水{{tasks.stage2Data.task_days}}天即可提现</text>
+      </view>
+      <view class="right">
+        <van-button bindtap="totixian" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn">去提现</van-button>
+        <text class="need-days" style='font-size:25rpx;text-align:center;'>浇水完成</text>
+      </view>
+    </view>
+
+    
+
+    <view class="row" wx:if="{{tasks.stage2 == 0 && tasks.stage3 == 0}}">
+      <view class="card">
+        <text>新人福利3：<text class="money">￥{{tasks.stage3Data.task_days_fee}}</text>（0/{{tasks.stage3Data.task_days}}）</text>
+        <van-progress percentage="0" color="#6190E8" show-pivot="{{false}}" class="progess" />
+        <text style='font-size:25rpx'>连续浇水{{tasks.stage3Data.task_days}}天即可提现</text>
+      </view>
+      <view class="right">
+        <van-button bindtap="cash" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn" disabled>提现</van-button>
+        <text class="need-days" style='font-size:25rpx'>还需浇水{{tasks.stage3Data.task_days}}天</text>
+      </view>
+
+      <view style='position: absolute;width:100%;height:100%;  opacity: 0.5;background: #000;left:0;top:0;z-index:1;'></view>
+      <view style='position: absolute;width:450rpx;left:120rpx;top:45rpx;z-index:2;color:#fff;text-align:center;display:flex;overflow:hidden;'>
+        <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" style='width:60rpx;height:60rpx;' />
+        <text style='padding:17rpx 0 0 5rpx;font-size:25rpx;'>完成新人福利1和福利2可解锁</text>
+      </view>
+    </view>
+
+    <view class="row" wx:if="{{tasks.stage2 == 1 && tasks.stage3 == 0}}">
+      <view class="card">
+        <text>新人福利3：<text class="money">￥{{tasks.stage3Data.task_days_fee}}</text>（{{tasks.days}}/{{tasks.stage3Data.task_days}}）</text>
+        <van-progress percentage="{{tasks.stage3Data.process}}" color="#6190E8" show-pivot="{{false}}" class="progess" />
+        <text style='font-size:25rpx'>连续浇水{{tasks.stage3Data.task_days}}天即可提现</text>
+      </view>
+      <view class="right">
+        <van-button bindtap="cash" data-days="{{tasks.days}}" data-leftdays='{{tasks.stage3Data.left_days}}' round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn" disabled>提现</van-button>
+        <text class="need-days" style='font-size:25rpx'>还需浇水{{tasks.stage3Data.left_days}}天</text>
+      </view>
+    </view>
+
+    <view class="row " wx:if="{{tasks.stage2 == 1 && tasks.stage3 == 1}}">
+      <view class="card">
+        <text>新人福利3：<text class="money">￥{{tasks.stage3Data.task_days_fee}}</text>（{{tasks.stage3Data.task_days}}/{{tasks.stage3Data.task_days}}）</text>
+        <van-progress percentage="100" color="#6190E8" show-pivot="{{false}}" class="progess" />
+        <text style='font-size:25rpx'>连续浇水{{tasks.stage3Data.task_days}}天即可提现</text>
+      </view>
+      <view class="right">
+        <van-button bindtap="totixian" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp tx-btn">去提现</van-button>
+        <text class="need-days" style='font-size:25rpx;text-align:center;'>浇水完成</text>
+      </view>
+    </view>
+
+
+
+
+    <!-- <view class="row disabled">
       <view class="card">
         <text>专享福利：<text class="money">￥200</text></text>
         <van-progress percentage="0" show-pivot="{{false}}" class="progess" />
       </view>
       <van-button bindtap="benefits" data-num="{{1000}}" round type="primary" size="small" custom-class="cus-btn" class="cus-btn-warp">点击领取</van-button>
       <image mode='aspectFit' class="lock" src="../../assets/image/lock.png" />
-    </view>
+    </view> -->
     <!-- 
     <view class="bottom-change-list__ad">
       <ad unit-id="adunit-4ffe795461054bab"></ad>

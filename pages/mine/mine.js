@@ -15,6 +15,12 @@ Page({
       userInfo: app.globalData.userInfo
     })
   },
+  tixian:function(){
+    wx.showModal({
+      title: '温馨提示',
+      content: '可提现金额为0,请先去浇水获取奖励',
+    })
+  },
   cash() {
     Dialog.alert({
       title: '提现失败',
